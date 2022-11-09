@@ -57,7 +57,7 @@ public class SalaryController {
 		// return dtos;
 		Salary salary_id = salaryRepository.findByIdAndName(id, name);
 		log.info(salary_id.toString());
-		// Salary_info salary_info = salary_infoRepository.findBysalary_info_id(salary_info_id);
+		// Salary_info salary_info = salary_infoRepository.findbysalaryId(id, name);
 		// log.info(salary_info.toString());
 
 		// model.addAttribute("info", salary_info);
