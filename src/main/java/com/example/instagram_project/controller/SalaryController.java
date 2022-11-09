@@ -53,7 +53,7 @@ public class SalaryController {
 		// 	dtos.add(dto);
 		// }
 
-		// // 반환
+		// // 반환asdf
 		// return dtos;
 		Salary salary_id = salaryRepository.findByIdAndName(id, name);
 		log.info(salary_id.toString());
