@@ -11,5 +11,12 @@ public class Salary_infoForm {
 	public Salary_info toEntity() {
 		return new Salary_info(salary_id, salary);
 	}
-	
+
+	public static Salary_infoForm create(Salary_info s) {
+		Salary_infoForm a = new Salary_infoForm();
+		a.salary = s.getSalary();
+		a.salary_id = s.getSalary_id();
+		return a;
+	}
+
 }

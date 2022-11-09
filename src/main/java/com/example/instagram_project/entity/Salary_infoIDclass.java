@@ -11,4 +11,9 @@ public class Salary_infoIDclass implements Serializable {
 
 	private Salary salary_id;
 
+	// public SalaryIDcalss toEntity(Long id, String name) {
+	// 	Salary_infoIDclass salary_infoIDclass = new Salary_infoIDclass();
+	// 	return salary_infoIDclass;
+	// }
+
 }
