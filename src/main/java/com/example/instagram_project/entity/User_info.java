@@ -2,9 +2,9 @@ package com.example.instagram_project.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,20 +16,20 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Getter
-@IdClass(SalaryIDcalss.class)
-public class Salary {
+public class User_info {
 
 	@Id
-	@GeneratedValue
-	private Long id;
+	// @OneToOne
+	// @JoinColumn(name="user_id")
+	private String user_id;
 
-	@Id
-	private String name;
+	@Column
+	private String intro_comment;
 
 	@Column
 	private String email;
 
 	@Column
-	private String time;
+	private int gender;
 	
 }

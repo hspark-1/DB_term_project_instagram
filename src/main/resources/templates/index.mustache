@@ -13,19 +13,15 @@
 		<tr>
 		  <th scope="col">ID</th>
 		  <th scope="col">Title</th>
-		  <th scope="col">Content</th>
-		  <th scope="col">Time</th>
 		</tr>
 		</thead>
 		<tbody>
-			{{#salaryList}}
+			{{#info}}
 				<tr>
-					<th><a href="/{{id}}/{{name}}">{{id}}</a></th>
-					<th>{{name}}</th>
-					<td>{{email}}</td>
-					<td>{{time}}</td>
+					<th>{{id}}</th>
+					<th>{{salary}}</th>
 				</tr>
-			{{/salaryList}}
+			{{/info}}
 		</tbody>
 	</table>
 </body>

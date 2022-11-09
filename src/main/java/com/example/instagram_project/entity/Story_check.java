@@ -14,22 +14,19 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
-@IdClass(SalaryIDcalss.class)
-public class Salary {
+@ToString
+@IdClass(Story_chekcIDclass.class)
+public class Story_check {
 
 	@Id
 	@GeneratedValue
-	private Long id;
+	private long story_id;
 
 	@Id
-	private String name;
+	private String check_id;
 
 	@Column
-	private String email;
-
-	@Column
-	private String time;
+	private int likes;
 	
 }

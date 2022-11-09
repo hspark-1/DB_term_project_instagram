@@ -1,10 +1,12 @@
 package com.example.instagram_project.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,20 +18,26 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Getter
-@IdClass(SalaryIDcalss.class)
-public class Salary {
+public class User {
 
 	@Id
-	@GeneratedValue
-	private Long id;
+	// @OneToOne(mappedBy = "User_info")
+	// @OneToMany(mappedBy = "Story")
+	private String user_id;
 
-	@Id
+	@Column
+	private String password;
+
+	@Column
 	private String name;
 
 	@Column
-	private String email;
+	private String phone_number;
 
 	@Column
-	private String time;
+	private Date birthday;
+
+	@Column
+	private String profile_photo;
 	
 }

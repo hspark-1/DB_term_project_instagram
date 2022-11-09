@@ -10,5 +10,7 @@ public interface SalaryRepository extends CrudRepository<Salary, Long> {
 	
 	@Override
 	ArrayList<Salary> findAll();
-	
+
+	Salary findByIdAndName(Long id, String name);
+
 }

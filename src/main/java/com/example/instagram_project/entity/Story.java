@@ -4,7 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,22 +15,20 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
-@IdClass(SalaryIDcalss.class)
-public class Salary {
+@ToString
+public class Story {
 
 	@Id
 	@GeneratedValue
-	private Long id;
-
-	@Id
-	private String name;
+	private long story_id;
 
 	@Column
-	private String email;
+	// @ManyToOne
+	// @JoinColumn(name="user_id")
+	private String user_id;
 
 	@Column
-	private String time;
+	private String story_photo;
 	
 }
