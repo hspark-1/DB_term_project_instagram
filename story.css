@@ -1,0 +1,60 @@
+.main{
+    width: 510px;
+    display: inline-block;
+    position: fixed;
+    top: 94px;
+    left: 35%;
+}
+
+article {
+    margin-bottom: 60px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #DBDBDB;
+}
+
+header {
+    height: 60px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #DBDBDB;
+}
+
+header img{
+    width:50px;
+}
+
+.story_img {
+    margin-bottom: 5px;
+}
+
+.story_img img{
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    width: 500px;
+}
+
+.icon_div{
+    display: inline-block;
+    width:30px;
+    margin-right: 10px;
+}
+
+
+.icon_div button{
+    border:0;
+    outline:0;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.icon img{
+    width:30px;
+}
+
+.story_inquiry_link{
+    display:block;
+}
