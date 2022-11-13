@@ -73,14 +73,19 @@ public class SalaryController {
 		// a.put(id, name);
 		// Salary_info salary_info = (Salary_info) salary_infoRepository.findByIdAndName(id, name);
 
-		log.info(salary_infoRepository.findAll().toString());
-		List<Salary_info> dtos = salary_infoRepository.findAll();
-		log.info(dtos.toString());
+		// log.info(salary_infoRepository.findAll().toString());
+		// List<Salary_info> dtos = salary_infoRepository.findAll();
+		// log.info(dtos.toString());
 		// model.addAttribute("infoEntityList", dtos);
 
-		Salary_info entity = salary_infoRepository.findById(id).orElse(null);
+		List<Salary_info> dtos = salary_infoRepository.findbySalaryId(id);
+		log.info("id = " + id);
+		log.info(dtos.toString());
+		model.addAttribute("infoEntityList", dtos);
+
+		// Salary_info entity = salary_infoRepository.findByIdandName(id, name);
 		
-		model.addAttribute("infoEntityList", entity);
+		// model.addAttribute("infoEntityList", entity);
 
 		
 		// Salary_info salary_info = salary_infoRepository.findByIdAndName(id, name);

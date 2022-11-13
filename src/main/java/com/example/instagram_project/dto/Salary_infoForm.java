@@ -9,7 +9,7 @@ public class Salary_infoForm {
 
 	private Long info_id;
 	// private String name;
-	private long salary;
+	private Long salary;
 	private Salary salary_id;
 
 	public Salary_info toEntity() {

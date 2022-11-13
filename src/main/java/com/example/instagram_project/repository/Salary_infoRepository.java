@@ -1,16 +1,24 @@
 package com.example.instagram_project.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.example.instagram_project.entity.Salary_info;
 
-public interface Salary_infoRepository extends CrudRepository<Salary_info, Long> {
+public interface Salary_infoRepository extends JpaRepository<Salary_info, Long> {
 	
 	@Override
 	ArrayList<Salary_info> findAll();
 	
+	@Query(value =
+            "SELECT * FROM salary_info WHERE id = :salary_id",
+            nativeQuery = true)
+	List<Salary_info> findbySalaryId(@Param("salary_id")Long id);
+
 	// @Query(value =
     //         "SELECT * " +
     //         "FROM salary_info " +
@@ -41,8 +49,8 @@ public interface Salary_infoRepository extends CrudRepository<Salary_info, Long>
 	// @Query(value =
 	// 		"SELECT * " +
 	// 		"FROM salary_info " +
-	// 		"WHERE ")
-	// Salary_info findbySalaryId(Salary salary_id);
+	// 		"WHERE salary_id = :id")
+	// Salary_info findbySalaryId(Long id);
 
 	// Salary_info findbysalaryId(Salary salary_id);
 

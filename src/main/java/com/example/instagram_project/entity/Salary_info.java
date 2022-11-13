@@ -34,7 +34,7 @@ public class Salary_info {
 	private Long info_id;
 
 	@Column
-	private long salary;
+	private Long salary;
 
 	@OneToOne
 	@JoinColumns({

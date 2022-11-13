@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.instagram_project.Service.InstagramService;
+import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
 import com.example.instagram_project.repository.UserRepository;
@@ -23,6 +25,8 @@ public class InstagramController {
 	private UserRepository userRepository;
 	@Autowired
 	private User_infoRepository user_infoRepository;
+	@Autowired
+	private InstagramService instagramService;
 
 	@GetMapping("/user")
 	public String userIndex(Model model) {
@@ -42,6 +46,18 @@ public class InstagramController {
 		model.addAttribute("infoEntity", infoEntity);
 
 		return "info";
+	}
+
+	@GetMapping("/story/{id}")
+	public String showStory(@PathVariable String id, Model model) {
+		log.info("id = " + id);
+		List<StoryForm> storyForms = instagramService.stories(id);
+
+		log.info(storyForms.toString());
+
+		model.addAttribute("stories", storyForms);
+
+		return "story";
 	}
 
 }
