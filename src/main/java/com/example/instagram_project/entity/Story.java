@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +23,9 @@ public class Story {
 	@GeneratedValue
 	private long story_id;
 
-	@Column
-	// @ManyToOne
-	// @JoinColumn(name="user_id")
-	private String user_id;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column
 	private String story_photo;

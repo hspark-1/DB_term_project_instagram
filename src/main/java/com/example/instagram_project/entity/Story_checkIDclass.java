@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class Story_chekcIDclass implements Serializable {
+public class Story_checkIDclass implements Serializable {
 	
-	private long story_id;
-	private String check_id;
+	private long id;
+	private String user_id;
 
 }

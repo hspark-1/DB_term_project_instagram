@@ -1,19 +1,19 @@
-package com.example.instagram_project.entity;
+// package com.example.instagram_project.entity;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+// import lombok.Data;
+// import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@Data
-public class Salary_infoIDclass implements Serializable {
+// @NoArgsConstructor
+// @Data
+// public class Salary_infoIDclass implements Serializable {
 
-	private Salary salary_id;
+// 	private Salary salary_id;
 
-	// public SalaryIDcalss toEntity(Long id, String name) {
-	// 	Salary_infoIDclass salary_infoIDclass = new Salary_infoIDclass();
-	// 	return salary_infoIDclass;
-	// }
+// 	// public SalaryIDcalss toEntity(Long id, String name) {
+// 	// 	Salary_infoIDclass salary_infoIDclass = new Salary_infoIDclass();
+// 	// 	return salary_infoIDclass;
+// 	// }
 
-}
+// }

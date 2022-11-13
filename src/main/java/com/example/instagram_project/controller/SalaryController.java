@@ -1,9 +1,6 @@
 package com.example.instagram_project.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.example.instagram_project.dto.Salary_infoForm;
 import com.example.instagram_project.entity.Salary;
 import com.example.instagram_project.entity.SalaryIDcalss;
 import com.example.instagram_project.entity.Salary_info;
@@ -78,6 +74,14 @@ public class SalaryController {
 		// Salary_info salary_info = (Salary_info) salary_infoRepository.findByIdAndName(id, name);
 
 		log.info(salary_infoRepository.findAll().toString());
+		List<Salary_info> dtos = salary_infoRepository.findAll();
+		log.info(dtos.toString());
+		// model.addAttribute("infoEntityList", dtos);
+
+		Salary_info entity = salary_infoRepository.findById(id).orElse(null);
+		
+		model.addAttribute("infoEntityList", entity);
+
 		
 		// Salary_info salary_info = salary_infoRepository.findByIdAndName(id, name);
 		// log.info(salary_info.toString());

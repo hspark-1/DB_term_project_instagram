@@ -3,6 +3,9 @@ package com.example.instagram_project.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,9 +20,13 @@ import lombok.ToString;
 public class User_info {
 
 	@Id
-	// @OneToOne
-	// @JoinColumn(name="user_id")
-	private String user_id;
+	@Column(name = "user_id", nullable = false)
+	private String id;
+
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column
 	private String intro_comment;

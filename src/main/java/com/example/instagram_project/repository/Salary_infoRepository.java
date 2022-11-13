@@ -1,16 +1,15 @@
 package com.example.instagram_project.repository;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.instagram_project.entity.Salary;
 import com.example.instagram_project.entity.Salary_info;
 
-public interface Salary_infoRepository extends CrudRepository<Salary_info, Salary> {
+public interface Salary_infoRepository extends CrudRepository<Salary_info, Long> {
+	
+	@Override
+	ArrayList<Salary_info> findAll();
 	
 	// @Query(value =
     //         "SELECT * " +
