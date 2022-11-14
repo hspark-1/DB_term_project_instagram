@@ -11,19 +11,17 @@
 	<table class="table">
 		<thead>
 		<tr>
-		  <th scope="col">story_id</th>
 		  <th scope="col">user_id</th>
-		  <th scope="col">story_photo</th>
+		  <th scope="col">follower</th>
 		</tr>
 		</thead>
 		<tbody>
-			{{#stories}}
+			{{#follow}}
 				<tr>
-					<th><a href="/user">{{story_id}}</a></th>
-					<th><a href="/user/{{user_id}}">{{user_id}}</a></th>
-					<td>{{story_photo}}</td>
+					<th><a href="">{{follow_id}}</a></th>
+					<th><a href="">{{user_id}}</a></th>
 				</tr>
-			{{/stories}}
+			{{/follow}}
 		</tbody>
 	</table>
 </body>

@@ -5,25 +5,29 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<title>story</title>
+	<title>DMdetail</title>
 </head>
 <body>
 	<table class="table">
 		<thead>
 		<tr>
-		  <th scope="col">story_id</th>
+		  <th scope="col">comment_id</th>
+		  <th scope="col">feed_id</th>
 		  <th scope="col">user_id</th>
-		  <th scope="col">story_photo</th>
+		  <th scope="col">comment</th>
+		  <th scope="col">likes</th>
 		</tr>
 		</thead>
 		<tbody>
-			{{#stories}}
+			{{#feed_commentsEntity}}
 				<tr>
-					<th><a href="/user">{{story_id}}</a></th>
-					<th><a href="/user/{{user_id}}">{{user_id}}</a></th>
-					<td>{{story_photo}}</td>
+					<th><a href="">{{comment_id}}</a></th>
+					<th><a href="">{{feed_id}}</a></th>
+					<th><a href="">{{user_id}}</a></th>
+					<th><a href="">{{comment}}</a></th>
+					<th><a href="">{{likes}}</a></th>
 				</tr>
-			{{/stories}}
+			{{/feed_commentsEntity}}
 		</tbody>
 	</table>
 </body>
