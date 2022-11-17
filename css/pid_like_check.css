@@ -1,0 +1,29 @@
+.main{
+    width: 510px;
+    display: inline-block;
+    position: fixed;
+    top: 94px;
+    left: 35%;
+}
+
+.pid_like_list{
+    background-color: #fff;
+    width: 310px;
+    border-radius: 3px;
+    border: 1px solid #DBDBDB;
+    height: 100%;
+    margin-bottom: 10px;
+}
+
+.pid_like_list span{
+    margin-left: 30px;
+}
+
+.pid_like_div{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.pid_like_div img{
+    width: 50px;
+}
