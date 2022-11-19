@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	{{#storyEntity}}
+	<div>
+		{{user.profile_photo}}
+	</div>
+	{{/storyEntity}}
+
+	<br>
+	
+	{{#feedEntity}}
+	<div>
+		<div>
+			{{user_id}}
+		</div>
+		<div>
+			{{feed_photo}}
+		</div>
+		<div>
+			좋아요 {{likes}}<br>
+			{{feed_comment}}
+		</div>
+	</div>
+	{{/feedEntity}}
+</body>
+</html>

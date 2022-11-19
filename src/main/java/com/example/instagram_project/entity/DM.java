@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.example.instagram_project.dto.DMDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ import lombok.ToString;
 public class DM {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
 	private Long DM_id;
 
 	@ManyToOne
@@ -38,5 +40,20 @@ public class DM {
 
 	@Column
 	private Timestamp time;
+
+	public static DM createDM(DMDto dto, User sender, User receiver) {
+	
+		if (dto.getComment() == null)
+			throw new IllegalArgumentException("dm의 내용이 없습니다. 생성 실패!");
+
+		// 엔티티 생성 및 반환
+		return new DM(
+			dto.getDM_id(),
+			sender,
+			receiver,
+			dto.getComment(),
+			dto.getTime()
+		);
+	}
 
 }

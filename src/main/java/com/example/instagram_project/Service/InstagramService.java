@@ -3,6 +3,8 @@ package com.example.instagram_project.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import com.example.instagram_project.dto.Feed_likesDto;
 import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.Story_checkForm;
+import com.example.instagram_project.entity.DM;
+import com.example.instagram_project.entity.User;
 import com.example.instagram_project.repository.Comment_likesRepository;
 import com.example.instagram_project.repository.DMRepository;
 import com.example.instagram_project.repository.FeedRepository;
@@ -22,6 +26,7 @@ import com.example.instagram_project.repository.Feed_likesRepository;
 import com.example.instagram_project.repository.FollowRepository;
 import com.example.instagram_project.repository.StoryRepository;
 import com.example.instagram_project.repository.Story_chekcRepository;
+import com.example.instagram_project.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InstagramService {
 
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private StoryRepository storyRepository;
 	@Autowired
@@ -49,6 +56,13 @@ public class InstagramService {
 	public List<StoryForm> stories(String userId) {
 		log.info(userId);
 		return storyRepository.findByUserId(userId)
+				.stream()
+				.map(story -> StoryForm.createStoryDto(story))
+				.collect(Collectors.toList());
+	}
+
+	public List<StoryForm> allstory() {
+		return storyRepository.findAllUserId()
 				.stream()
 				.map(story -> StoryForm.createStoryDto(story))
 				.collect(Collectors.toList());
@@ -118,4 +132,19 @@ public class InstagramService {
 				.collect(Collectors.toList());
 	}
 
+	@Transactional
+	public DMDto create(DMDto dto) {
+		User sender = userRepository.findById(dto.getSender_id()).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 게시글이 없습니다."));
+		User receiver = userRepository.findById(dto.getReceiver_id()).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 게시글이 없습니다."));
+		// 댓글 엔티티 생성
+		DM dm = DM.createDM(dto, sender, receiver);
+		log.info(dm.toString());
+
+		// 댓글 엔티티를 DB로 저장
+		DM created = dmRepository.save(dm);
+
+		//DTo로 변경하여 반환
+		return DMDto.createDMDto(created);
+	}
+	
 }

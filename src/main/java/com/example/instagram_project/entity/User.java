@@ -38,4 +38,14 @@ public class User {
 	@Column
 	private String profile_photo;
 	
+	public boolean checkID(User target) {
+		String pw = target.password;
+
+		if(this.password.equals(pw)){
+			return true;
+		}
+
+		return false;
+	}
+
 }

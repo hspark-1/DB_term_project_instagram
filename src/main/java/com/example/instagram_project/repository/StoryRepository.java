@@ -27,6 +27,11 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
             nativeQuery = true)
 	List<Story> findByUserId(String userId);
 
+	@Query(value =
+			"SELECT * FROM Story s GROUP BY s.user_id",
+			nativeQuery = true)
+	List<Story> findAllUserId();
+
 	@Override
 	ArrayList<Story> findAll();
 	
