@@ -15,8 +15,6 @@ import com.example.instagram_project.dto.FeedDto;
 import com.example.instagram_project.dto.Feed_commentDto;
 import com.example.instagram_project.dto.Feed_likesDto;
 import com.example.instagram_project.dto.FollowDto;
-import com.example.instagram_project.dto.StoryForm;
-import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
 import com.example.instagram_project.repository.UserRepository;

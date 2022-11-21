@@ -19,4 +19,14 @@ public interface FollowRepository extends JpaRepository<Follow, String> {
             nativeQuery = true)
 	List<Follow> findByFollowId(String userId);
 	
+	@Query(value =
+            "SELECT count(*) FROM follow s WHERE s.follow_id = ?1",
+            nativeQuery = true)
+	int findByFollowcount(String userId);
+	
+	@Query(value =
+            "SELECT count(*) FROM follow s WHERE s.user_id = ?1",
+            nativeQuery = true)
+	int findByUsercount(String userId);
+	
 }

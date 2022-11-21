@@ -22,6 +22,7 @@ import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.dto.UserForm;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
+import com.example.instagram_project.repository.FollowRepository;
 import com.example.instagram_project.repository.UserRepository;
 import com.example.instagram_project.repository.User_infoRepository;
 
@@ -39,6 +40,8 @@ public class InstagramController {
 	public User_infoRepository user_infoRepository;
 	@Autowired
 	public InstagramService instagramService;
+	@Autowired
+	public FollowRepository followRepository;
 
 	@GetMapping("/login")
 	public String loginIndex() {
@@ -51,8 +54,14 @@ public class InstagramController {
 	}
 
 	@PostMapping("/create/user")
-	public String usercreate(UserForm form) {
+	public String usercreate(UserForm form, RedirectAttributes rttr) {
 		User user = form.toEntity();
+		User user1 = userRepository.findById(user.getUser_id()).orElse(null);
+		if(user1 != null) {
+			rttr.addFlashAttribute("msg", "Duplicate ID! Please sign up again.");
+			return "redirect:/signup";
+		}
+
 		User saved = userRepository.save(user);
 		log.info(saved.toString());
 
@@ -177,14 +186,19 @@ public class InstagramController {
 		User userEntity = userRepository.findById(userId).orElse(null);
 		User_info infoEntity = user_infoRepository.findById(userId).orElse(null);
 		List<FeedDto> feedDtos = instagramService.feedsById(userId);
+		int followcount = followRepository.findByFollowcount(userId);
+		int followingcount = followRepository.findByUsercount(userId);
 
 		log.info(feedDtos.toString());
 		log.info(userEntity.toString());
 		log.info(infoEntity.toString());
+		log.info(followcount + "count");
 
 		model.addAttribute("feedEntity", feedDtos);
 		model.addAttribute("userEntity", userEntity);
 		model.addAttribute("infoEntity", infoEntity);
+		model.addAttribute("followcount", followcount);
+		model.addAttribute("followingcount", followingcount);
 
 		return "profiledetail";
 	}
