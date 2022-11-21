@@ -13,7 +13,7 @@
 		<article>
 			<form action="/checkID" method="post">
 				<div style="width: 300px; height: 300px;">
-					<fieldset style="border-radius: 10px; text-align: center; position: relative; left: 750px; top: 50%;">
+					<fieldset style="border-radius: 10px; padding-bottom: 50px; text-align: center; position: relative; left: 750px; top: 50%;">
 						<legend style="text-align: center;"><b>로그인</b></legend>
 						<div style="margin-top: 50px;">
 							<i data-visualcompletion="css-img" aria-label="Instagram" class="" role="img" 
@@ -26,19 +26,18 @@
 						<div style="margin-bottom: 20px; margin-top: 15px;">
 							<input style="width: 175px; height: 25px; border: 1px solid black; border-radius: 5px;" type="password" placeholder="&nbsp;비밀번호" value="" name="password">
 						</div>
-						{{#msg}}
-						<div style="margin-bottom: 10px;">
-							{{msg}}
-						</div>
-						{{/msg}}
-						<div style="width: 268px; margin-bottom: 50px;">
+						<div style="width: 268px; margin-top: 30px; margin-bottom: 10px;">
 							<button style="width: 175px; background-color: skyblue; border: 0px; height: 30px; border-radius: 5px;" type="submit"><b>로그인</b></button>
 						</div>
 					</fieldset>
 				</div>
-				<br>
+				{{#msg}}
+				<div style="position: absolute; width: 296px; text-align: center; left: 760px; top: 53%;">
+					{{msg}}
+				</div>
+				{{/msg}}
 				<div style="position: relative; margin-top: 60px; width: 300px; height: 300px;">
-					<fieldset style="border-radius: 10px; text-align: center; position: relative; left: 750px; top: 50%;">
+					<fieldset style="border-radius: 10px; text-align: center; position: relative; left: 750px; top: 60%;">
 						<div>
 							<a>계정이 없으신가요? </a><a OnClick="location.href ='/signup'" style="display: inline-block; cursor: pointer; color: blue;"><b>가입하기</b></a>
 						</div>

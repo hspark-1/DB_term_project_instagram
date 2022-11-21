@@ -234,6 +234,10 @@ public class InstagramController {
 
 	@GetMapping("/story/{userId}")
 	public String showstory(@PathVariable String userId, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
 		log.info("id = " + userId);
 		List<StoryForm> storyForms = instagramService.stories(userId);
 
@@ -247,6 +251,10 @@ public class InstagramController {
 
 	@GetMapping("/story/check/{story_id}")
 	public String showstorycheck(@PathVariable Long story_id, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
 		log.info("id = " + story_id);
 		List<Story_checkForm> story_checkForms = instagramService.checks(story_id);
 
