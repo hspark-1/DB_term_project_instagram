@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container {
+			width: 302px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+		.h1-size {
+			font-size: 2em !important;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<article>
+			<fieldset class="container">
+				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
+					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
+					<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+					follower</b></h1>
+				</div>
+				</legend>
+				<div style="position: relative; margin-top: 10px; border-bottom: 30px; height: auto; text-align: center;">
+					{{#follow}}
+					<div OnClick="location.href ='/profile/{{user1.user_id}}'" style="cursor: pointer; width:300px; height: auto; position: relative; float: left; margin: 7px 0px;">
+						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;"></div>
+						<div style="position: relative; width: 240px; height: auto; float: left; margin-left: 5px; text-align: left;">
+							<p style="font-size: 1.3em; margin: 0px;"><b>{{user1.user_id}}</b>&nbsp;&nbsp;</p><p style="font-size: 0.75em; margin: 0px;">{{user1.name}}</p>
+						</div>
+					</div>
+					{{/follow}}
+					<div style="position: relative; float: left; height: 10px; width: 300px; text-align: center;">
+				</div>
+			</fieldset>
+		</article>
+	</section>	
+</body>
+</html>

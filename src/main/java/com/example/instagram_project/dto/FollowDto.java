@@ -1,6 +1,7 @@
 package com.example.instagram_project.dto;
 
 import com.example.instagram_project.entity.Follow;
+import com.example.instagram_project.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +14,11 @@ import lombok.ToString;
 @ToString
 public class FollowDto {
 
-	private String user_id;
-	private String follow_id;
+	private User user1;
+	private User user2;
 
 	public static FollowDto createFollowDto(Follow follow) {
-		return new FollowDto(follow.getUser1().getUser_id(), follow.getUser2().getUser_id());
+		return new FollowDto(follow.getUser1(), follow.getUser2());
 	}
 	
 }

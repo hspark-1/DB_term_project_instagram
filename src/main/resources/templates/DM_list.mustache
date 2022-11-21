@@ -30,13 +30,20 @@
 	<section>
 		<article>
 			<fieldset class="container">
-				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">{{#user}}{{user_id}}{{/user}}</b></h1></legend>
+					<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
+						<div OnClick="location.href ='/mainpage'" style="cursor: pointer;">
+						<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+						{{user.user_id}}</b></h1>
+					</div>
+					</legend>
 				<div style="margin-top: 15px; margin-bottom: 30px; text-align: center;">
 					{{#DMentity}}
-					<div OnClick="location.href ='http://localhost:8080/direct/{{sender_id}}'" style="display: inline-block; cursor: pointer; width: 80%; border: 1px solid black;">
-						<div style="text-align: left; position: relative; left: 5px;">
-							<h3 style="margin: 0px;">{{sender_id}}</h3>
-							{{Comment}}
+					<div style="margin-left: 10px; margin-bottom: 10px;">
+						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;"></div>
+						<div OnClick="location.href ='/direct/{{user_id}}'" style="position: relative; display: inline-block; cursor: pointer; width: 80%; height: 52px;">
+							<div style="text-align: left; position: relative; left: 5px;">
+								<h3 style="margin: 0px;">{{user_id}}</h3>
+							</div>
 						</div>
 					</div>
 					{{/DMentity}}

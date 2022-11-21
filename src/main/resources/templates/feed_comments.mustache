@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container {
+			width: 300px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+		.h1-size {
+			font-size: 2em !important;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<article>
+			<fieldset class="container">
+				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
+					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
+					<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+					Feed</b></h1>
+				</div>
+				</legend>
+				<div style="margin-top: 10px; border-bottom: 30px; text-align: center;">
+					{{#feedDto}}
+					<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; text-align: left;">
+						<div style="position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;"></div>
+						<div style="position: relative; float: left; width: 60px; height: 30px; line-height : 30px; margin-left: 10px;">
+							{{user.user_id}}
+						</div>
+					</div>
+					<div style="margin-top: 10px; width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
+						{{feed_photo}}
+					</div>
+					<div style="width: 300px; height: auto; position: relative; float: left; text-align: left; margin-top: 10px;">
+						<p OnClick="location.href ='/feed/likes/{{feed_id}}'" style="display: inline-block; cursor: pointer; font-size: 0.85em; margin: 0px;">좋아요 {{likes}}개</p>
+						<p style="font-size: 0.85em; margin: 0px;"><b>{{feed_comment}}</b></p>
+					</div>
+					{{/feedDto}}
+					{{#feed_commentDtos}}
+					<div style="width:300px; height: auto; position: relative; float: left; margin: 7px 0px;">
+						<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;"></div>
+						<div style="position: relative; width: 260px; height: auto; float: left; margin-left: 5px; text-align: left;"><p style="font-size: 0.85em; margin: 0px;">
+							<b OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer;">{{user.user_id}}</b>&nbsp;&nbsp;{{comment}}</p><div  OnClick="location.href ='/feed/comment/likes/{{comment_id}}'" style="cursor: pointer;"><p style="font-size: 0.56em; margin: 0px;">좋아요 {{likes}}개</p></div>
+						</div>
+					</div>
+					{{/feed_commentDtos}}
+				</div>
+				<div><br>.</div>
+			</fieldset>
+			<form>
+				<div style="position: relative; float: left; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; left: 750px; top: -20px; width: 301.5px; height: 10px; margin: 2px; border: 2px; padding: 12px; border-width: 2px; border-image: initial;
+				border-style: groove; border-color: rgb(192, 192, 192); background-color: white;">
+					<input type="text" id="getcomment" placeholder="댓글 달기..." style="border: none; outline: none; border-style: none; border-color: Transparent; position: relative; float: left; top: -10px; left: -6px; height: 26px; width: 78%;">
+					{{#user}}<input type="hidden" id="getuserid" value="{{user_id}}">{{/user}}
+					{{#feedDto}}<input type="hidden" id="getfeedid" value="{{feed_id}}">{{/feedDto}}
+					<input type="hidden" id="getlikes" value="0">
+					<div style="position: relative; float: left; top: -7px; left: 12px; margin-left: 2px;">
+						<button id="comment-create-btn" style="border: none; background: none;" type="button"><b>게시</b></button>
+					</div>
+				</div>
+			</form>
+		</article>
+	</section>	
+</body>
+<script>
+	{
+		const commentCreateBtn = document.querySelector("#comment-create-btn");
+		console.log(commentCreateBtn);
+
+		commentCreateBtn.addEventListener("click", function() {
+			const comment = {
+				feed_id: document.querySelector("#getfeedid").value,
+				user_id: document.querySelector("#getuserid").value,
+				comment: document.querySelector("#getcomment").value,
+				likes: document.querySelector("#getlikes").value
+			};
+
+			console.log(comment);
+			
+			// fetch() - Talend API 요청을 JavaScript로 보내준다!
+			const url = "/api/create/feed/" + comment.user_id + "/comments";
+			fetch(url, {
+				method: "post",
+				body: JSON.stringify(comment),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			}).then(response => {
+				// http 응답 코드에 따른 메세지 출력
+				const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글 등록 실패..!";
+				alert(msg);
+				// 현재 페이지 새로고침
+				window.location.reload();
+			});
+		});
+	}
+</script>
+</html>

@@ -11,12 +11,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.instagram_project.Service.InstagramService;
+import com.example.instagram_project.dto.Comment_likesDto;
 import com.example.instagram_project.dto.DMDto;
 import com.example.instagram_project.dto.FeedDto;
+import com.example.instagram_project.dto.Feed_commentDto;
+import com.example.instagram_project.dto.Feed_likesDto;
+import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
+import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.dto.UserForm;
 import com.example.instagram_project.entity.User;
+import com.example.instagram_project.entity.User_info;
 import com.example.instagram_project.repository.UserRepository;
+import com.example.instagram_project.repository.User_infoRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +35,8 @@ public class InstagramController {
 
 	@Autowired
 	public UserRepository userRepository;
+	@Autowired
+	public User_infoRepository user_infoRepository;
 	@Autowired
 	public InstagramService instagramService;
 
@@ -49,6 +58,7 @@ public class InstagramController {
 
 		return "redirect:/login";
 	}
+
 	@PostMapping("/checkID")
 	public String checkID(UserForm form, RedirectAttributes rttr) {
 		User article = form.toEntity();
@@ -90,12 +100,13 @@ public class InstagramController {
 			return "redirect:/login";
 		}
 
-		List<DMDto> dmDtos = instagramService.DMs(user_id);
+		// List<DMDto> dmDtos = instagramService.DMs(user_id);
 		User user = userRepository.findById(user_id).orElse(null);
-		model.addAttribute("DMentity", dmDtos);
+		List<User> userEntity = userRepository.findAll();
+		model.addAttribute("DMentity", userEntity);
 		model.addAttribute("user", user);
 
-		log.info(dmDtos.toString());
+		log.info(userEntity.toString());
 
 		return "DM_list";
 	}
@@ -119,6 +130,131 @@ public class InstagramController {
 		model.addAttribute("senderId", send_user);
 
 		return "DM_user";
+	}
+
+	@GetMapping("/feed/comments/{feedId}")
+	public String showFeedComments(@PathVariable long feedId, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		List<FeedDto> feedDto = instagramService.feedId(feedId);
+		List<Feed_commentDto> feed_commentDtos = instagramService.feed_comments(feedId);
+
+		model.addAttribute("feedDto", feedDto);
+		model.addAttribute("feed_commentDtos", feed_commentDtos);
+
+		User user = userRepository.findById(user_id).orElse(null);
+		model.addAttribute("user", user);
+
+		log.info(feedDto.toString());
+		log.info(feed_commentDtos.toString());
+		
+		return "feed_comments";
+	}
+
+	@GetMapping("/feed/likes/{feed_id}")
+	public String showFeedLikes(@PathVariable long feed_id, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		log.info("feedLikes = " + feed_id);
+		List<Feed_likesDto> feed_likesDtos = instagramService.feed_likes(feed_id);
+		log.info(feed_likesDtos.toString());
+		model.addAttribute("feed_liksEntity", feed_likesDtos);
+
+		return "feed_likes";
+	}
+
+	@GetMapping("/profile/{userId}")
+	public String showprofile(@PathVariable String userId, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		log.info(userId);
+		User userEntity = userRepository.findById(userId).orElse(null);
+		User_info infoEntity = user_infoRepository.findById(userId).orElse(null);
+		List<FeedDto> feedDtos = instagramService.feedsById(userId);
+
+		log.info(feedDtos.toString());
+		log.info(userEntity.toString());
+		log.info(infoEntity.toString());
+
+		model.addAttribute("feedEntity", feedDtos);
+		model.addAttribute("userEntity", userEntity);
+		model.addAttribute("infoEntity", infoEntity);
+
+		return "profiledetail";
+	}
+
+	@GetMapping("/profile/following/{userId}")
+	public String showfollowing(@PathVariable String userId, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		List<FollowDto> followDtos = instagramService.followings(userId);
+
+		log.info(followDtos.toString());
+
+		model.addAttribute("follow", followDtos);
+
+		return "profilefollowing";
+	}
+
+	@GetMapping("/profile/follower/{userId}")
+	public String showfollower(@PathVariable String userId, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		List<FollowDto> followDtos = instagramService.followers(userId);
+
+		log.info(followDtos.toString());
+
+		model.addAttribute("follow", followDtos);
+
+		return "profilefollower";
+	}
+
+	@GetMapping("/feed/comment/likes/{comment_id}")
+	public String feedcommentlikes(@PathVariable Long comment_id, Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		List<Comment_likesDto> comment_likesDtos = instagramService.comment_likes(comment_id);
+		log.info(comment_likesDtos.toString());
+		model.addAttribute("comment_likesEntity", comment_likesDtos);
+		
+		return "feedcommentlikes";
+	}
+
+	@GetMapping("/story/{userId}")
+	public String showstory(@PathVariable String userId, Model model) {
+		log.info("id = " + userId);
+		List<StoryForm> storyForms = instagramService.stories(userId);
+
+		log.info(storyForms.toString());
+
+		model.addAttribute("stories", storyForms);
+
+
+		return "showstory";
+	}
+
+	@GetMapping("/story/check/{story_id}")
+	public String showstorycheck(@PathVariable Long story_id, Model model) {
+		log.info("id = " + story_id);
+		List<Story_checkForm> story_checkForms = instagramService.checks(story_id);
+
+		log.info(story_checkForms.toString());
+
+		model.addAttribute("checkEntity", story_checkForms);
+
+		return "showstorycheck";
 	}
 
 }

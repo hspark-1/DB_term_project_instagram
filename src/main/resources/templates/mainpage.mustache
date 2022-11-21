@@ -5,29 +5,86 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<style>
+		.container {
+			width: 300px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+	</style>
 </head>
 <body>
-	{{#storyEntity}}
-	<div>
-		{{user.profile_photo}}
-	</div>
-	{{/storyEntity}}
+	<section>
+		<article>
+			<fieldset class="container">
+				<div style="position: relative; float: left; width: 300px; padding-bottom: 10px; overflow: scroll; overflow: auto; margin-top: 50px; white-space: nowrap;">
+					{{#storyEntity}}
+					<div OnClick="location.href ='/story/{{user.user_id}}'" style="cursor: pointer; position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black; margin-top: 5px; margin-right: 10px;"></div>
+					{{/storyEntity}}
+				</div>
+				<div style="position: relative; float: left; width: 300px; border-bottom: 2px solid black;"></div>
+				<div style="position: relative; float: left; margin-top: 10px; border-bottom: 30px; text-align: center;">
+					{{#feedEntity}}
+					<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; text-align: left;">
+						<div style="position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;"></div>
+						<div style="position: relative; float: left; width: 60px; height: 30px; line-height : 30px; margin-left: 10px;">
+							{{user.user_id}}
+						</div>
+					</div>
+					<div style="margin-top: 10px; width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
+						{{feed_photo}}
+					</div>
+					<div style="width: 300px; height: auto; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px;">
+						<p OnClick="location.href ='/feed/likes/{{feed_id}}'" style="display: inline-block; cursor: pointer; font-size: 0.85em; margin: 0px;">좋아요 {{likes}}개</p>
+						<p style="font-size: 0.85em; margin: 0px;"><b>{{feed_comment}}</b></p>
+						<div OnClick="location.href ='/feed/comments/{{feed_id}}'" style="cursor: pointer; position: relative; float: left; width: 302px;">
+							<p style="font-size: 0.75em; margin: 0px;">댓글 보기</p>
+						</div>
+					</div>
 
-	<br>
-	
-	{{#feedEntity}}
-	<div>
-		<div>
-			{{user_id}}
-		</div>
-		<div>
-			{{feed_photo}}
-		</div>
-		<div>
-			좋아요 {{likes}}<br>
-			{{feed_comment}}
-		</div>
-	</div>
-	{{/feedEntity}}
+					{{/feedEntity}}
+				</div>
+				<header style="position: fixed; width: 302px; top: 102px; height: 50px; background-color: white; padding-top: 3.6px;">
+					<div OnClick="location.href ='/mainpage'" style="cursor: pointer; position: relative; float: left; left: -5px; top: 10px; height: 30px;">
+						<img src="https://logos-download.com/wp-content/uploads/2016/03/Instagram_Logo_2016.png" style="width: 100%; height: 100%;">
+					</div>
+					<form style="position: relative; float: left; top: 10px; width: 150px; margin-left: 10px; height: 30px;">
+						<div style="position: relative; float: left; top: 5px; width: 65%; height: 20px; margin: 0;">
+							<input type="text" id="getid" placeholder="아이디 입력..." style="position: relative; float: left; width: 100%; height: 20px; padding: 0px; border: 0px;">
+						</div>
+						<div style="position: relative; float: left; top: 3px; width: 30%;">
+							<button id="search-id" style="border: none; background: none;" type="button"><b>검색</b></button>
+						</div>
+					</form>
+					<div OnClick="location.href ='/direct/inbox'" style="cursor: pointer; position: relative; float: right; left: 5px; top: 10px; height: 30px;">
+						<img src="https://cdn-icons-png.flaticon.com/512/5694/5694443.png" style="width: 100%; height: 100%;">
+					</div>
+				</header>
+			</fieldset>
+		</article>
+	</section>
+
 </body>
+<script>
+	{
+		const searchid = document.querySelector("#search-id");
+		console.log(searchid);
+
+		searchid.addEventListener("click", function() {
+			const id = document.querySelector("#getid").value;
+
+			location.href="/profile/"+id;
+		});
+	}
+</script>
 </html>

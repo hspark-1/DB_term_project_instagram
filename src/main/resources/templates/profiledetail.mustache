@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container {
+			width: 300px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+		.h1-size {
+			font-size: 2em !important;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<article>
+			<fieldset class="container">
+				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
+					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
+					<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+					{{userEntity.user_id}}</b></h1>
+				</div>
+				</legend>
+				<div style="position: relative; float: left; margin: 0; height: 70px;">
+					<div style="position: relative; float: left; width: 68px; height: 68px; border-radius: 35px; border: 1px solid black;"></div>
+					<div OnClick="location.href ='/profile/follower/{{userEntity.user_id}}'" style="cursor: pointer; position: relative; float: left; width: 100px; height: 70px; margin-left: 20px; text-align: center;">
+						<p style="position: relative; width: 100px; margin: 0px; margin-top: 20px;"><b style="position: relative;">팔로워</b></p>
+					</div>
+					<div OnClick="location.href ='/profile/following/{{userEntity.user_id}}'" style="cursor: pointer; position: relative; float: left; width: 100px; height: 70px; text-align: center;">
+						<p style="position: relative; width: 100px; margin: 0px; margin-top: 20px;"><b style="position: relative;">팔로잉</b></p>
+					</div>
+				</div>
+				<div style="position: relative; float: left; padding: 20px 0px; width: 300px; height: 20px; border-bottom: 2px solid black;">
+					<p style="position: relative; float: left; top: -10px; margin: 0;"><b>{{userEntity.name}}</b></p><br>
+					{{#infoEntity}}
+					<p style="position: relative; float: left; top: -10px; margin: 0;">{{intro_comment}}</p>
+					{{/infoEntity}}
+				</div>
+				<div style="position: relative; float: left; margin-top: 20px; border-bottom: 30px; text-align: center;">
+					{{#feedEntity}}
+					<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; text-align: left;">
+						<div style="position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;"></div>
+						<div style="position: relative; float: left; width: 60px; height: 30px; line-height : 30px; margin-left: 10px;">
+							{{user.user_id}}
+						</div>
+					</div>
+					<div style="margin-top: 10px; width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
+						{{feed_photo}}
+					</div>
+					<div style="width: 300px; height: auto; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px;">
+						<p OnClick="location.href ='/feed/likes/{{feed_id}}'" style="display: inline-block; cursor: pointer; font-size: 0.85em; margin: 0px;">좋아요 {{likes}}개</p>
+						<p style="font-size: 0.85em; margin: 0px;"><b>{{feed_comment}}</b></p>
+						<div OnClick="location.href ='/feed/comments/{{feed_id}}'" style="cursor: pointer; position: relative; float: left; width: 302px;">
+							<p style="font-size: 0.75em; margin: 0px;">댓글 보기</p>
+						</div>
+					</div>
+					{{/feedEntity}}
+				</div>
+			</fieldset>
+		</article>
+	</section>	
+</body>
+</html>

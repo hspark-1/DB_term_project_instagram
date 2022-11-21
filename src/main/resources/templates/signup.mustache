@@ -14,7 +14,7 @@
 			<form action="/create/user" method="post">
 				<div style="width: 300px; height: 300px;">
 					<fieldset style="border-radius: 10px; text-align: center; position: relative; left: 750px; top: 50%;">
-						<legend style="text-align: center;"><b>Sign Up</b></legend>
+						<legend style="text-align: center;"><b>가입하기</b></legend>
 						<div style="margin-top: 30px;">
 							<i data-visualcompletion="css-img" aria-label="Instagram" class="" role="img" 
 								style="background-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yi/r/ZFtnMBJnHU_.png&quot;); 
@@ -22,39 +22,43 @@
 						</div>
 						<div style="margin-top: 15px;">
 							<p>
-								<input style="width: 175px; height: 25px; border-radius: 5px;" type="text" placeholder="Phone number" value="" name="phone_number">
+								<input style="width: 175px; height: 25px; border-radius: 5px;" type="text" placeholder="&nbsp;휴대폰 번호" value="" name="phone_number">
 							</p>
 						</div>
 						<div style="margin-top: 15px;">
 							<p>
-								<input style="width: 175px; height: 25px; border-radius: 5px;" type="text" placeholder="Your name" value="" name="name">
+								<input style="width: 175px; height: 25px; border-radius: 5px;" type="text" placeholder="&nbsp;성명" value="" name="name">
 							</p>
 						</div>
 						<div style="margin-top: 15px;">
 							<p>
-								<input style="width: 175px; height: 25px; border-radius: 5px;" type="text" placeholder="User ID" value="" name="user_id">
+								<input style="width: 175px; height: 25px; border-radius: 5px;" type="text" placeholder="&nbsp;사용자 이름" value="" name="user_id">
 							</p>
 						</div>
 						<div style="margin-top: 15px;">
 							<p>
-								<input style="width: 175px; height: 25px; border-radius: 5px;" type="password" placeholder="Password" value="" name="password">
+								<input style="width: 175px; height: 25px; border-radius: 5px;" type="password" placeholder="&nbsp;비밀번호" value="" name="password">
 							</p>
 						</div>
-						<div style="margin-bottom: 50px; margin-top: 15px;">
+						<div style="margin-bottom: 20px; margin-top: 15px;">
 							<p>
 								<input style="width: 175px; height: 25px; border-radius: 5px;" type="date" placeholder="Your birthday" value="" name="birthday">
 							</p>
 						</div>
 						<input type="hidden" value="0" name="profile_photo">
-						<div style="margin-bottom: 30px;">
-							<button style="width: 175px; height: 25px; border-radius: 5px;" type="submit">SIGN UP</button>
-						</div>
-						<div>
-							<a>Do you have an account? </a><a href="login">Sign in</a>
+						<div style="width: 268px; margin-bottom: 30px;">
+							<button style="width: 175px; background-color: skyblue; border: 0px; height: 30px; border-radius: 5px;" type="submit"><b>가입</b></button>
 						</div>
 					</fieldset>
 				</div>
 				<br>
+				<div style="position: relative; margin-top: 60px; width: 300px; height: 300px;">
+					<fieldset style="border-radius: 10px; text-align: center; position: relative; left: 750px; top: 75%;">
+						<div>
+							<a>계정이 있으신가요? </a><a OnClick="location.href ='/login'" style="display: inline-block; cursor: pointer; color: blue;"><b>로그인</b></a>
+						</div>
+					</fieldset>
+				</div>
 			</form>
 		</article>
 	</section>	

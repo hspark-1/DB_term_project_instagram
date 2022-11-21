@@ -17,6 +17,8 @@ import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.entity.DM;
+import com.example.instagram_project.entity.Feed;
+import com.example.instagram_project.entity.Feed_comment;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.repository.Comment_likesRepository;
 import com.example.instagram_project.repository.DMRepository;
@@ -111,6 +113,20 @@ public class InstagramService {
 				.collect(Collectors.toList());
 	}
 
+	public List<FeedDto> feedsById(String user_id) {
+		return feedRepository.feedsById(user_id)
+				.stream()
+				.map(feed -> FeedDto.createFeedDto(feed))
+				.collect(Collectors.toList());
+	}
+
+	public List<FeedDto> feedId(long feedId) {
+		return feedRepository.findById(feedId)
+				.stream()
+				.map(feed -> FeedDto.createFeedDto(feed))
+				.collect(Collectors.toList());
+	}
+
 	public List<Feed_likesDto> feed_likes(Long id) {
 		return feed_likesRepository.findByFeedId(id)
 				.stream()
@@ -145,6 +161,24 @@ public class InstagramService {
 
 		//DTo로 변경하여 반환
 		return DMDto.createDMDto(created);
+	}
+
+	@Transactional
+	public Feed_commentDto createFC(Feed_commentDto dto, String id) {
+		Feed feed = feedRepository.findById(dto.getFeed_id()).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 게시글이 없습니다."));
+		log.info(feed.toString());
+		log.info("user_id = " + id);
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 유저가 없습니다."));
+		log.info(user.toString());
+		// 댓글 엔티티 생성
+		Feed_comment feed_comment = Feed_comment.createFeedC(dto, feed, user);
+		log.info(feed_comment.toString());
+
+		// 댓글 엔티티를 DB로 저장
+		Feed_comment created = feed_commentRepository.save(feed_comment);
+
+		//DTo로 변경하여 반환
+		return Feed_commentDto.createFeed_commentDto(created);
 	}
 	
 }

@@ -55,29 +55,29 @@ public class temporaryController {
 		return "info";
 	}
 
-	@GetMapping("/story/{id}")
-	public String showStory(@PathVariable String id, Model model) {
-		log.info("id = " + id);
-		List<StoryForm> storyForms = instagramService.stories(id);
+	// @GetMapping("/story/{id}")
+	// public String showStory(@PathVariable String id, Model model) {
+	// 	log.info("id = " + id);
+	// 	List<StoryForm> storyForms = instagramService.stories(id);
 
-		log.info(storyForms.toString());
+	// 	log.info(storyForms.toString());
 
-		model.addAttribute("stories", storyForms);
+	// 	model.addAttribute("stories", storyForms);
 
-		return "story";
-	}
+	// 	return "story";
+	// }
 
-	@GetMapping("/storycheck/{storyid}")
-	public String storyCheckIndex(@PathVariable Long storyid, Model model) {
-		log.info("id = " + storyid);
-		List<Story_checkForm> story_checkForms = instagramService.checks(storyid);
+	// @GetMapping("/storycheck/{storyid}")
+	// public String storyCheckIndex(@PathVariable Long storyid, Model model) {
+	// 	log.info("id = " + storyid);
+	// 	List<Story_checkForm> story_checkForms = instagramService.checks(storyid);
 
-		log.info(story_checkForms.toString());
+	// 	log.info(story_checkForms.toString());
 
-		model.addAttribute("checkEntity", story_checkForms);
+	// 	model.addAttribute("checkEntity", story_checkForms);
 
-		return "story_check";
-	}
+	// 	return "story_check";
+	// }
 
 	@GetMapping("/following/{userId}")
 	public String followingCheckIndex(@PathVariable String userId, Model model) {
