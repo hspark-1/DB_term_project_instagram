@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container {
+			width: 300px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+		.h1-size {
+			font-size: 2em !important;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<article>
+			<fieldset class="container">
+				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
+					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
+						<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+						new feed</b></h1>
+					</div>
+				</legend>
+				<form>
+					<div style="position: relative; float: right; top: -10px; height: 25px;">
+						<button id="comment-create-btn" style="border: none; background: none; color: blue;" type="submit"><h3 style="margin: 0px;"><b>공유</b></h3></button>
+					</div>
+					<div style="width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
+						<textarea placeholder="&nbsp;사진 선택..." style="width: 300px; height: 300px; padding: 0px; border: 0px; font-size: 15pt;" id="getphoto" name="getphoto"></textarea>
+					</div>
+					<div style="width: 300px; height: 50px; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px; border: 1px solid black;">
+						<textarea placeholder="&nbsp;문구 입력..." style="width: 300px; height: 50px; padding: 0px; border: 0px; font-size: 15pt;" id="getcomment" name="getcomment"></textarea>
+					</div>
+					<input type="hidden" value="0" id="getlikes" name="likes">
+					<input type="hidden" value="{{#userEntity}}{{user_id}}{{/userEntity}}" id="getID" name="likes">
+				</form>
+				<script>
+					{
+						const commentCreateBtn = document.querySelector("#comment-create-btn");
+						console.log(commentCreateBtn);
+				
+						commentCreateBtn.addEventListener("click", function() {
+							alert("");
+							const comment = {
+								feed_photo: document.querySelector("#getphoto").value,
+								feed_comment: document.querySelector("#getcomment").value,
+								likes: document.querySelector("#getlikes").value
+							};
+				
+							console.log(comment);
+							alert("");
+
+							const id = {
+								user_id: document.querySelector("#getID").value
+							} 
+							console.log(id);
+							alert("");
+							
+							// fetch() - Talend API 요청을 JavaScript로 보내준다!
+							const url = "/api/create/newfeed/" + id.user_id;
+							fetch(url, {
+								method: "post",
+								body: JSON.stringify(comment),
+								headers: {
+									"Content-Type": "application/json"
+								}
+							}).then(response => {
+								const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글 등록 실패..!";
+								alert(msg);
+								// 현재 페이지 새로고침
+								location.href="/mainpage";
+							});
+						});
+					}
+				</script>
+			</fieldset>
+		</article>
+	</section>	
+</body>
+</html>

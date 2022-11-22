@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.instagram_project.Service.InstagramService;
 import com.example.instagram_project.dto.DMDto;
+import com.example.instagram_project.dto.FeedDto;
 import com.example.instagram_project.dto.Feed_commentDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,16 @@ public class InstagramApiController {
 	public ResponseEntity<Feed_commentDto> createFC(@PathVariable String id, @RequestBody Feed_commentDto dto) {
 		log.info("value from json : " + dto.toString());
 		Feed_commentDto createdDto = instagramService.createFC(dto, id);
+
+		log.info(createdDto.toString());
+
+		return ResponseEntity.status(HttpStatus.OK).body(createdDto);
+	}
+
+	@PostMapping("/api/create/newfeed/{id}")
+	public ResponseEntity<FeedDto> createFeed(@PathVariable String id, @RequestBody FeedDto dto) {
+		log.info("value from json : " + dto.toString());
+		FeedDto createdDto = instagramService.createFeed(dto, id);
 
 		log.info(createdDto.toString());
 

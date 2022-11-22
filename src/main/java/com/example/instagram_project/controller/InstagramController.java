@@ -20,8 +20,10 @@ import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.dto.UserForm;
+import com.example.instagram_project.entity.Feed;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
+import com.example.instagram_project.repository.FeedRepository;
 import com.example.instagram_project.repository.FollowRepository;
 import com.example.instagram_project.repository.UserRepository;
 import com.example.instagram_project.repository.User_infoRepository;
@@ -36,6 +38,8 @@ public class InstagramController {
 
 	@Autowired
 	public UserRepository userRepository;
+	@Autowired
+	public FeedRepository feedRepository;
 	@Autowired
 	public User_infoRepository user_infoRepository;
 	@Autowired
@@ -101,6 +105,34 @@ public class InstagramController {
 		log.info(storyForms.toString());
 
 		return "mainpage";
+	}
+
+	@GetMapping("/feed/create")
+	public String feedcreate(Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		User user = userRepository.findById(user_id).orElse(null);
+		log.info(user.toString());
+		model.addAttribute("userEntity", user);
+
+		return "feedcreate";
+	}
+	
+	@PostMapping("/feed/createnew/{userId}")
+	public String createArticle(@PathVariable String userId, FeedDto form) {
+		log.info(form.toString());
+
+		User user = userRepository.findById(userId).orElse(null);
+		log.info(user.toString());
+		Feed article = form.toEntity(user);
+		log.info(article.toString());
+
+		Feed saved = feedRepository.save(article);
+		log.info(saved.toString());
+
+		return "redirect:/mainpage";
 	}
 
 	@GetMapping("/direct/inbox")
@@ -184,6 +216,9 @@ public class InstagramController {
 
 		log.info(userId);
 		User userEntity = userRepository.findById(userId).orElse(null);
+		if(userEntity == null) {
+			return "redirect:/mainpage";
+		}
 		User_info infoEntity = user_infoRepository.findById(userId).orElse(null);
 		List<FeedDto> feedDtos = instagramService.feedsById(userId);
 		int followcount = followRepository.findByFollowcount(userId);

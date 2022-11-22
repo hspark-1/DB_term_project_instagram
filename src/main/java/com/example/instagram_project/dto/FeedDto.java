@@ -20,6 +20,10 @@ public class FeedDto {
 	private String feed_comment;
 	private Long likes;
 
+	public Feed toEntity(User user1) {
+		return new Feed(feed_id, user1, feed_photo, feed_comment, likes);
+	}
+
 	public static FeedDto createFeedDto(Feed feed) {
 		return new FeedDto(feed.getFeed_id(), feed.getUser(), feed.getFeed_photo(), feed.getFeed_comment(), feed.getLikes());
 	}

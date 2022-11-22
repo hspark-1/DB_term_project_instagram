@@ -10,7 +10,9 @@ import com.example.instagram_project.entity.Feed;
 
 public interface FeedRepository extends JpaRepository<Feed, Long> {
 	
-	@Override
+	@Query(value =
+			"select * from feed order by feed_id desc;",
+			nativeQuery = true)
 	ArrayList<Feed> findAll();
 	
 	@Query(value =

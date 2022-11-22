@@ -180,5 +180,15 @@ public class InstagramService {
 		//DTo로 변경하여 반환
 		return Feed_commentDto.createFeed_commentDto(created);
 	}
+
+	public FeedDto createFeed(FeedDto dto, String id) {
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 게시글이 없습니다."));
+		log.info(user.toString());
+
+		Feed feed = Feed.createFeed(dto, user);
+		Feed created = feedRepository.save(feed);
+
+		return FeedDto.createFeedDto(created);
+	}
 	
 }
