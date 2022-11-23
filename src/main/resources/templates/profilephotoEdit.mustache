@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container {
+			width: 300px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+		.h1-size {
+			font-size: 2em !important;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<article>
+			<fieldset class="container">
+				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
+					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
+						<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+						modify</b></h1>
+					</div>
+				</legend>
+				<form action="/profile/update" method="post">
+					<div style="position: relative; float: right; top: -10px; height: 25px;">
+						<button id="comment-create-btn" style="border: none; background: none; color: blue;" type="submit"><h3 style="margin: 0px;"><b>확인</b></h3></button>
+					</div>
+					<div style="width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
+						
+						<input type="hidden" value="{{userEntity.profile_photo}}" id="photo">
+						<script>
+							var a = document.querySelector("#photo");
+							if(a.value == 0) {
+								document.write("<textarea placeholder=\"&nbsp;사진 선택...\" style=\"width: 300px; height: 300px; padding: 0px; border: 0px; font-size: 15pt;\" id=\"profile_photo\" name=\"profile_photo\"></textarea>");
+							} else {
+								document.write("<textarea placeholder=\"&nbsp;" + a.value + "\" style=\"width: 300px; height: 300px; padding: 0px; border: 0px; font-size: 15pt;\" id=\"profile_photo\" name=\"profile_photo\"></textarea>");
+							}
+						</script>
+					</div>
+					<input type="hidden" value="{{#userEntity}}{{user_id}}{{/userEntity}}" id="getuser_id" name="user_id">
+					<input type="hidden" value="{{#userEntity}}{{password}}{{/userEntity}}" id="getpassword" name="password">
+					<input type="hidden" value="{{#userEntity}}{{name}}{{/userEntity}}" id="getname" name="name">
+					<input type="hidden" value="{{#userEntity}}{{phone_number}}{{/userEntity}}" id="getphone_number" name="phone_number">
+					<input type="hidden" value="{{#userEntity}}{{birthday}}{{/userEntity}}" id="getbirthday" name="birthday">
+				</form>
+			</fieldset>
+		</article>
+	</section>	
+</body>
+</html>

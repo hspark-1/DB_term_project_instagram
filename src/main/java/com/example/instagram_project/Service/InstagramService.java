@@ -16,10 +16,13 @@ import com.example.instagram_project.dto.Feed_likesDto;
 import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.Story_checkForm;
+import com.example.instagram_project.dto.User_infoForm;
 import com.example.instagram_project.entity.DM;
 import com.example.instagram_project.entity.Feed;
 import com.example.instagram_project.entity.Feed_comment;
+import com.example.instagram_project.entity.Story;
 import com.example.instagram_project.entity.User;
+import com.example.instagram_project.entity.User_info;
 import com.example.instagram_project.repository.Comment_likesRepository;
 import com.example.instagram_project.repository.DMRepository;
 import com.example.instagram_project.repository.FeedRepository;
@@ -29,6 +32,7 @@ import com.example.instagram_project.repository.FollowRepository;
 import com.example.instagram_project.repository.StoryRepository;
 import com.example.instagram_project.repository.Story_chekcRepository;
 import com.example.instagram_project.repository.UserRepository;
+import com.example.instagram_project.repository.User_infoRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,6 +58,8 @@ public class InstagramService {
 	private Feed_commentRepository feed_commentRepository;
 	@Autowired
 	private Comment_likesRepository comment_likesRepository;
+	@Autowired
+	private User_infoRepository user_infoRepository;
 
 	public List<StoryForm> stories(String userId) {
 		log.info(userId);
@@ -189,6 +195,34 @@ public class InstagramService {
 		Feed created = feedRepository.save(feed);
 
 		return FeedDto.createFeedDto(created);
+	}
+
+	public StoryForm createStory(StoryForm dto, String id) {
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 게시글이 없습니다."));
+		log.info(user.toString());
+
+		Story story = Story.createStory(dto, user);
+		log.info(story.toString());
+		Story created = storyRepository.save(story);
+		log.info(created.toString());
+
+		return StoryForm.createStoryForm(created);
+	}
+
+	@Transactional
+	public User_infoForm updateInfo(User_infoForm dto, String userId) {
+		// 댓글 조회 및 예외 발생
+		User_info target = user_infoRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("댓글 수정 실패! 대상 댓글이 없습니다."));
+		log.info(target.toString());
+		// 댓글 수정
+		target.patch(dto);
+		log.info(dto.toString());
+		// DB로 갱신
+		User_info updated = user_infoRepository.save(target);
+
+		log.info(updated.toString());
+		// 댓글 엔티티를 DTO로 변환 및 반환
+		return User_infoForm.createUser_infoForm(updated);
 	}
 	
 }

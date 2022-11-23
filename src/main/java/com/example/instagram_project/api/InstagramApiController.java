@@ -12,6 +12,8 @@ import com.example.instagram_project.Service.InstagramService;
 import com.example.instagram_project.dto.DMDto;
 import com.example.instagram_project.dto.FeedDto;
 import com.example.instagram_project.dto.Feed_commentDto;
+import com.example.instagram_project.dto.StoryForm;
+import com.example.instagram_project.dto.User_infoForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +51,26 @@ public class InstagramApiController {
 		log.info(createdDto.toString());
 
 		return ResponseEntity.status(HttpStatus.OK).body(createdDto);
+	}
+
+	@PostMapping("/api/update/info/{userId}")
+	public ResponseEntity<User_infoForm> updateInfo(@PathVariable String userId, @RequestBody User_infoForm dto) {
+		log.info("value from json : " + dto.toString());
+		User_infoForm createdDto = instagramService.updateInfo(dto, userId);
+
+		log.info(createdDto.toString());
+
+		return ResponseEntity.status(HttpStatus.OK).body(createdDto);
+	}
+
+	@PostMapping("/api/create/newstory/{userId}")
+	public ResponseEntity<StoryForm> createStory(@PathVariable String userId, @RequestBody StoryForm dto) {
+		log.info("value from json : " + dto.toString());
+		StoryForm createdDto = instagramService.createStory(dto, userId);
+
+		log.info(createdDto.toString());
+
+		return (createdDto != null) ? ResponseEntity.status(HttpStatus.OK).body(createdDto) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
 }

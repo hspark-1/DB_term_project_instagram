@@ -26,4 +26,8 @@ public class StoryForm {
 		);
 	}
 
+	public static StoryForm createStoryForm(Story story) {
+		return new StoryForm(story.getStory_id(), story.getUser(), story.getStory_photo());
+	}
+
 }

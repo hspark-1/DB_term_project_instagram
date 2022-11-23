@@ -20,6 +20,7 @@ import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.dto.UserForm;
+import com.example.instagram_project.dto.User_infoForm;
 import com.example.instagram_project.entity.Feed;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
@@ -67,9 +68,31 @@ public class InstagramController {
 		}
 
 		User saved = userRepository.save(user);
+		User_infoForm infoForm = User_infoForm.createUser_infoForm(user);
+		log.info(infoForm.toString());
+		User_info savedInfo = User_info.createInfo(infoForm);
+		log.info(savedInfo.toString());
+		int i = user_infoRepository.save(savedInfo.getUser().getUser_id(), savedInfo.getEmail(), savedInfo.getGender(), savedInfo.getIntro_comment());
+		
+		log.info("i = " + i);
 		log.info(saved.toString());
 
 		return "redirect:/login";
+	}
+
+	@PostMapping("/profile/update")
+	public String updatePhoto(UserForm form) {
+		log.info(form.toString());
+		User user = form.toEntity();
+		log.info(user.toString());
+		User target = userRepository.findById(user.getUser_id()).orElse(null);
+		log.info(target.toString());
+		
+		if(target!=null) {
+			userRepository.save(user);
+		}
+
+		return "redirect:/mainpage";
 	}
 
 	@PostMapping("/checkID")
@@ -77,6 +100,7 @@ public class InstagramController {
 		User article = form.toEntity();
 		log.info(article.toString());
 		String id = article.getUser_id();
+		log.info(id);
 		User target = userRepository.findById(id).orElse(null);
 
 		if(target!=null && article.checkID(target)) {
@@ -105,6 +129,19 @@ public class InstagramController {
 		log.info(storyForms.toString());
 
 		return "mainpage";
+	}
+
+	@GetMapping("/profile/photo/edit")
+	public String profileEdit(Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		User user = userRepository.findById(user_id).orElse(null);
+		log.info(user.toString());
+		model.addAttribute("userEntity", user);
+
+		return "profilephotoEdit";
 	}
 
 	@GetMapping("/feed/create")
@@ -145,7 +182,7 @@ public class InstagramController {
 		User user = userRepository.findById(user_id).orElse(null);
 		List<User> userEntity = userRepository.findAll();
 		model.addAttribute("DMentity", userEntity);
-		model.addAttribute("user", user);
+		model.addAttribute("userEntity", user);
 
 		log.info(userEntity.toString());
 
@@ -268,6 +305,25 @@ public class InstagramController {
 		return "profilefollower";
 	}
 
+	@GetMapping("/profile/edit/{userId}")
+	public String editprofile(@PathVariable String userId, Model model, RedirectAttributes rttr) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+		if(!(userId.equals(user_id))) {
+			rttr.addFlashAttribute("msg", "편집 권한이 없습니다.");
+			return "redirect:/profile/" + userId;
+		}
+
+		User userEntity = userRepository.findById(userId).orElse(null);
+		User_info userInfoEntity = user_infoRepository.findById(userId).orElse(null);
+
+		model.addAttribute("userEntity", userEntity);
+		model.addAttribute("userInfoEntity", userInfoEntity);
+
+		return "profileedit";
+	}
+
 	@GetMapping("/feed/comment/likes/{comment_id}")
 	public String feedcommentlikes(@PathVariable Long comment_id, Model model) {
 		if(user_id == null) {
@@ -312,6 +368,18 @@ public class InstagramController {
 		model.addAttribute("checkEntity", story_checkForms);
 
 		return "showstorycheck";
+	}
+
+	@GetMapping("/newstory")
+	public String newstoryIndex(Model model) {
+		if(user_id == null) {
+			return "redirect:/login";
+		}
+
+		User user = userRepository.findById(user_id).orElse(null);
+		model.addAttribute("userEntity", user);
+
+		return "newstory";
 	}
 
 }

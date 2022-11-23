@@ -33,13 +33,31 @@
 					<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
 						<div OnClick="location.href ='/mainpage'" style="cursor: pointer;">
 						<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
-						{{user.user_id}}</b></h1>
+						{{userEntity.user_id}}</b></h1>
 					</div>
 					</legend>
+					<script>
+						var i=0;
+					</script>
 				<div style="margin-top: 15px; margin-bottom: 30px; text-align: center;">
 					{{#DMentity}}
 					<div OnClick="location.href ='/direct/{{user_id}}'" style="cursor: pointer; margin-left: 10px; margin-bottom: 10px;">
-						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;"></div>
+						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;">
+							<input type="hidden" value="{{profile_photo}}" id="getprofile_photo1">
+							<script>
+								var a = document.querySelectorAll("#getprofile_photo1");
+								var x = [];
+								x.push(a[i].value);
+								if(a[i].value == 0) {
+									console.log("사진없음");
+									document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
+								}
+								else {
+									document.write("<img src=\"{{profile_photo}}\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
+								}
+								i++;
+							</script>
+						</div>
 						<div style="position: relative; display: inline-block; width: 80%; height: 52px;">
 							<div style="text-align: left; position: relative; left: 5px;">
 								<h3 style="margin: 0px;">{{user_id}}</h3>

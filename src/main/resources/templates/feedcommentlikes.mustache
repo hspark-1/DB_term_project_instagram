@@ -37,10 +37,28 @@
 					Likes</b></h1>
 				</div>
 				</legend>
+				<script>
+					var i=0;
+				</script>
 				<div style="position: relative; margin-top: 5px; border-bottom: 30px; height: auto; text-align: center;">
 					{{#comment_likesEntity}}
 					<div OnClick="location.href ='/profile/{{user1.user_id}}'" style="cursor: pointer; width:300px; height: auto; position: relative; float: left; margin: 7px 0px;">
-						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;"></div>
+						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;">
+							<input type="hidden" value="{{user1.profile_photo}}" id="getprofile_photo1">
+							<script>
+								var a = document.querySelectorAll("#getprofile_photo1");
+								var x = [];
+								x.push(a[i].value);
+								if(a[i].value == 0) {
+									console.log("사진없음");
+									document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
+								}
+								else {
+									document.write("<img src=\"{{user1.profile_photo}}\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
+								}
+								i++;
+							</script>
+						</div>
 						<div style="position: relative; width: 240px; height: auto; float: left; margin-left: 5px; text-align: left;">
 							<p style="font-size: 1.3em; margin: 0px;"><b>{{user1.user_id}}</b>&nbsp;&nbsp;</p><p style="font-size: 0.75em; margin: 0px;">{{user1.name}}</p>
 						</div>

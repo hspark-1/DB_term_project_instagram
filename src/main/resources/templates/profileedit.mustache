@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container {
+			width: 300px; 
+			height: 530px; 
+			border-radius: 10px; 
+			text-align: center; 
+			position: relative; 
+			left: 750px; 
+			top: 50%; 
+			overflow: auto;
+			margin-top: 100px;
+			padding-bottom: 0;
+		}
+		.container::-webkit-scrollbar {
+		  width: 0px;
+		}
+		.h1-size {
+			font-size: 2em !important;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<article>
+			<fieldset class="container">
+				<legend style="text-align: left;">
+					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
+						<h1 class="h1-size"><b style="text-transform:uppercase;"></b>
+						<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
+						{{userEntity.user_id}}</b></h1>
+					</div>
+				</legend>
+				<form>
+					<div style="position: relative; float: right; top: -10px; height: 25px;">
+						<button id="info-update-btn" style="border: none; background: none; color: blue;" type="submit"><h3 style="margin: 0px;"><b>완료</b></h3></button>
+					</div>
+					<input type="hidden" id="getuserid" value="{{userEntity.user_id}}">
+					<div style="position: relative; float: left; width: 300px; margin-bottom: 20px;">
+						<div onclick="location.href='/profile/photo/edit'" style="cursor: pointer; position: relative; margin-left: 115px; width: 70px; height: 100px; ">
+							<div style="position: relative; width: 68px; height: 68px; border-radius: 35px; border: 1px solid black;">
+									<input type="hidden" value="{{userEntity.profile_photo}}" id="getprofile_photo">
+									<script>
+										var i=0;
+										var a = document.querySelectorAll("#getprofile_photo");
+										var x = [];
+										x.push(a[i].value);
+										if(a[i].value == 0) {
+											console.log("사진없음");
+											document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 35px; width: 100%; height: 100%;\">");
+										}
+										else {
+											document.write("<img src=\"{{userEntity.profile_photo}}\" style=\"border-radius: 35px; width: 100%; height: 100%;\">");
+										}
+										i++;
+									</script>
+							</div>
+							<div style="position: relative; float: left; width: 180px; left: -55px;">
+								<p style="position: absolute; margin-top: 10px; width: 100%;">프로필 사진 수정하기</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div style="position: relative; float: left; width: 300px; height: 30px;">
+							<div style="position: relative; float: left; width: 70px; height: 100%;">
+								<p style="font-family: var(--font-family-system); position: relative; float: left; font-size: 15pt; margin: 0; margin-bottom: 5px; height: 100%; bottom: 0;">이메일</p>
+							</div>
+							<div style="position: relative; float: left; width: 210px; height: 100%; margin-left: 10px;">
+								<input type="text" id="getEmail" value="{{userInfoEntity.email}}" style="font-family: var(--font-family-system); width: 100%; height: 27px; padding: 0; font-size: 15pt; border: none; outline: none; border-style: none; border-color: Transparent; position: relative; float: left; border-bottom: 1px solid gray; margin-bottom: 5px; top: -5px;">
+							</div>
+						</div>
+						<div style="position: relative; float: left; width: 300px; height: 30px;">
+							<div style="position: relative; float: left; width: 70px; height: 100%;">
+								<p style="font-family: var(--font-family-system); position: relative; float: left; font-size: 15pt; margin: 0; margin-bottom: 5px;">성별</p>
+							</div>
+							<div style="position: relative; float: left; width: 210px; height: 100%; margin-left: 10px;">
+								<input type="hidden" id="getGender" value="{{userInfoEntity.gender}}">
+								<script>
+									var a = document.querySelector("#getGender");
+										console.log(a.value);
+									if(a.value == 0){
+										document.write("<input type=\"text\" id=\"getGender1\" value=\"남자\" style=\"font-family: var(--font-family-system); width: 100%; font-size: 15pt; border: none; outline: none; border-style: none; border-color: Transparent; position: relative; float: left; border-bottom: 1px solid gray; margin-bottom: 5px; top: -5px;\">");
+									}
+									else if(a.value == 1) {
+										document.write("<input type=\"text\" id=\"getGender1\" value=\"여자\" style=\"font-family: var(--font-family-system); width: 100%; font-size: 15pt; border: none; outline: none; border-style: none; border-color: Transparent; position: relative; float: left; border-bottom: 1px solid gray; margin-bottom: 5px; top: -5px;\">");
+									}
+									else {
+										document.write("<input type=\"text\" id=\"getGender1\" placeholder=\"남자 or 여자\" value=\"\" style=\"font-family: var(--font-family-system); width: 100%; font-size: 15pt; border: none; outline: none; border-style: none; border-color: Transparent; position: relative; float: left; border-bottom: 1px solid gray; margin-bottom: 5px; top: -5px;\">");
+									}
+								</script>
+							</div>
+						</div>
+						<div style="position: relative; float: left; width: 300px; height: 30px;">
+							<div style="position: relative; float: left; width: 70px; height: 100%;">
+								<p style="font-family: var(--font-family-system); position: relative; float: left; font-size: 15pt; margin: 0; ">소개</p>
+							</div>
+							<div style="position: relative; float: left; width: 210px; height: 100%; margin-left: 10px;">
+								<p style="margin: 0;"><textarea id="getIntro" style="width: 100%; height: 70px; font-family: var(--font-family-system); outline: none; padding: 0; resize: none; border: none; border-bottom: 1px solid gray; font-size: 15pt; top: -5px;">{{userInfoEntity.intro_comment}}</textarea></p>
+							</div>
+						</div>
+					</div>
+				</form>
+				<script>
+					{
+						const infoUpdateBtn = document.querySelector("#info-update-btn");
+						console.log(infoUpdateBtn);
+				
+						infoUpdateBtn.addEventListener("click", function() {
+							var G=document.querySelector("#getGender1").value;
+								console.log(G);
+							if(G == "남자") {
+								G = 0;
+							}
+							else if(G == "여자") {
+								G = 1;
+							}
+							else {
+								console.log("성별 입력 오류");
+								const msg = "정보 수정 실패..!";
+								alert(msg);
+								window.location.reload();
+								throw new Error("성별입력오류");
+							}
+
+							const info = {
+								user_id: document.querySelector("#getuserid").value,
+								email: document.querySelector("#getEmail").value,
+								gender: G,
+								intro_comment: document.querySelector("#getIntro").value
+							};
+
+							console.log(info);
+							// fetch() - Talend API 요청을 JavaScript로 보내준다!
+							const url = "/api/update/info/" + info.user_id;
+							fetch(url, {
+								method: "post",
+								body: JSON.stringify(info),
+								headers: {
+									"Content-Type": "application/json"
+								}
+							}).then(response => {
+								window.location.href="/mainpage";
+							});
+								window.location.href="/mainpage";
+						});
+					}
+				</script>
+			</fieldset>
+		</article>
+	</section>	
+</body>
+</html>

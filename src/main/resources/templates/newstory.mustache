@@ -34,7 +34,7 @@
 				<legend style="text-align: left;"><h1 class="h1-size"><b style="text-transform:uppercase;">
 					<div OnClick="location.href ='javascript:history.back()'" style="cursor: pointer;">
 						<img src="https://cdn-icons-png.flaticon.com/512/130/130882.png" style="width: 22px">
-						new feed</b></h1>
+						new story</b></h1>
 					</div>
 				</legend>
 				<form>
@@ -44,10 +44,6 @@
 					<div style="width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
 						<textarea placeholder="&nbsp;사진 선택..." style="width: 300px; height: 300px; padding: 0px; border: 0px; font-size: 15pt;" id="getphoto" name="getphoto"></textarea>
 					</div>
-					<div style="width: 300px; height: 50px; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px; border: 1px solid black;">
-						<textarea placeholder="&nbsp;문구 입력..." style="width: 300px; height: 50px; padding: 0px; border: 0px; font-size: 15pt;" id="getcomment" name="getcomment"></textarea>
-					</div>
-					<input type="hidden" value="0" id="getlikes" name="likes">
 					<input type="hidden" value="{{#userEntity}}{{user_id}}{{/userEntity}}" id="getID" name="likes">
 				</form>
 				<script>
@@ -56,19 +52,14 @@
 						console.log(commentCreateBtn);
 				
 						commentCreateBtn.addEventListener("click", function() {
+							window.location.replace=("/mainpage");
 							const comment = {
-								feed_photo: document.querySelector("#getphoto").value,
-								feed_comment: document.querySelector("#getcomment").value,
-								likes: document.querySelector("#getlikes").value
-							};
-				
-
-							const id = {
+								story_photo: document.querySelector("#getphoto").value,
 								user_id: document.querySelector("#getID").value
-							} 
-							
+							};
+
 							// fetch() - Talend API 요청을 JavaScript로 보내준다!
-							const url = "/api/create/newfeed/" + id.user_id;
+							const url = "/api/create/newstory/" + comment.user_id;
 							fetch(url, {
 								method: "post",
 								body: JSON.stringify(comment),
@@ -77,8 +68,6 @@
 								}
 							}).then(response => {
 								// 현재 페이지 새로고침
-								const msg = (response.ok) ? "게시글이 등록되었습니다." : "게시글 등록 실패..!";
-								alert(msg);
 								window.location.href="/mainpage";
 							});
 								window.location.href="/mainpage";

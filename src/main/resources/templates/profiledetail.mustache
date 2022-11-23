@@ -37,13 +37,43 @@
 					{{userEntity.user_id}}</b></h1>
 				</div>
 				</legend>
+				<script>
+					var i=0;
+				</script>
 				<div style="position: relative; float: left; margin: 0; height: 70px;">
-					<div style="position: relative; float: left; width: 68px; height: 68px; border-radius: 35px; border: 1px solid black;"></div>
-					<div style="position: relative; float: left; width: 100px; height: 70px; margin-left: 20px; text-align: center;">
-						<p OnClick="location.href ='/profile/follower/{{userEntity.user_id}}'" style="cursor: pointer; position: relative; width: 100px; margin: 0px; margin-top: 14px;"><b style="position: relative;">{{followingcount}}<br>팔로워</b></p>
+					<div style="position: relative; float: left; width: 68px; height: 68px; border-radius: 35px; border: 1px solid black;">
+							<input type="hidden" value="{{userEntity.profile_photo}}" id="getprofile_photo">
+							<script>
+								var a = document.querySelectorAll("#getprofile_photo");
+								var x = [];
+								x.push(a[i].value);
+								if(a[i].value == 0) {
+									console.log("사진없음");
+									document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 35px; width: 100%; height: 100%;\">");
+								}
+								else {
+									document.write("<img src=\"{{userEntity.profile_photo}}\" style=\"border-radius: 35px; width: 100%; height: 100%;\">");
+								}
+								i++;
+							</script>
 					</div>
-					<div style="position: relative; float: left; width: 100px; height: 70px; text-align: center;">
-						<p OnClick="location.href ='/profile/following/{{userEntity.user_id}}'" style="cursor: pointer; position: relative; width: 100px; margin: 0px; margin-top: 14px;"><b style="position: relative;">{{followcount}}<br>팔로잉</b></p>
+					<div style="position: relative; float: left; height: 70px; text-align: center;">
+						<div style="position: relative; float: left; width: 100px; height: 50px; margin-left: 29px; text-align: center;">
+							<p OnClick="location.href ='/profile/follower/{{userEntity.user_id}}'" style="cursor: pointer; position: relative; width: auto; margin: 0px; margin-top: 0;"><b style="position: relative;">{{followingcount}}<br>팔로워</b></p>
+						</div>
+						<div style="position: relative; float: left; width: 80px; height: 50px; text-align: center;">
+							<p OnClick="location.href ='/profile/following/{{userEntity.user_id}}'" style="cursor: pointer; position: relative; width: auto; margin: 0px; margin-top: 0;"><b style="position: relative;">{{followcount}}<br>팔로잉</b></p>
+						</div>
+						<div OnClick="location.href ='/profile/edit/{{userEntity.user_id}}'" style="position: relative; margin-left: 24px; width: 200px; height: 15px;">
+							<button id="search-id" style="cursor: pointer; border-radius: 10px; width: 100%; border: none; background-color: rgb(220, 220, 220);" type="button"><b>프로필 편집</b></button>
+						</div>
+						{{#msg}}
+						<input type="hidden" value="{{msg}}" id="alertmsg">
+						<script>
+							var a = document.querySelectorAll("#alertmsg");
+							alert(a[0].value);
+						</script>
+						{{/msg}}
 					</div>
 				</div>
 				<div style="position: relative; float: left; padding: 20px 0px; width: 300px; height: 20px; border-bottom: 2px solid black;">
@@ -52,16 +82,34 @@
 					<p style="position: relative; float: left; top: -10px; margin: 0;">{{intro_comment}}</p>
 					{{/infoEntity}}
 				</div>
+				<script>
+					var i=0;
+				</script>
 				<div style="position: relative; float: left; margin-top: 20px; border-bottom: 30px; text-align: center;">
 					{{#feedEntity}}
 					<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; text-align: left;">
-						<div style="position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;"></div>
+						<div style="position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;">
+							<input type="hidden" value="{{user.profile_photo}}" id="getprofile_photo1">
+							<script>
+								var a = document.querySelectorAll("#getprofile_photo1");
+								var x = [];
+								x.push(a[i].value);
+								if(a[i].value == 0) {
+									console.log("사진없음");
+									document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 15px; width: 100%; height: 100%;\">");
+								}
+								else {
+									document.write("<img src=\"{{user.profile_photo}}\" style=\"border-radius: 15px; width: 100%; height: 100%;\">");
+								}
+								i++;
+							</script>
+						</div>
 						<div style="position: relative; float: left; width: 60px; height: 30px; line-height : 30px; margin-left: 10px;">
 							{{user.user_id}}
 						</div>
 					</div>
 					<div style="margin-top: 10px; width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
-						{{feed_photo}}
+						<img src="{{feed_photo}}" alt="{{feed_photo}}" style="width: 100%; height: 100%;">
 					</div>
 					<div style="width: 300px; height: auto; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px;">
 						<p OnClick="location.href ='/feed/likes/{{feed_id}}'" style="display: inline-block; cursor: pointer; font-size: 0.85em; margin: 0px;">좋아요 {{likes}}개</p>
