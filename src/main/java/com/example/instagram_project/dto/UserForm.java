@@ -22,4 +22,8 @@ public class UserForm {
 		return new User(user_id, password, name, phone_number, birthday, profile_photo);
 	}
 
+	public static User toEntity(String a, String b, String c, String d, Date e, String f) {
+		return new User(a, b, c, d, e, f);
+	}
+
 }

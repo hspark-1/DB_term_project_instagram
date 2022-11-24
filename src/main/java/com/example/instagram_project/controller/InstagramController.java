@@ -1,5 +1,15 @@
 package com.example.instagram_project.controller;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +58,232 @@ public class InstagramController {
 	@Autowired
 	public FollowRepository followRepository;
 
+	public List<User> jdbcUserFindAll() throws SQLException, ParseException {
+		Connection con = null;
+		try {
+			log.info(user_id);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/practice";
+			String user = "root", passwd = "12345";
+			con = DriverManager.getConnection(url, user, passwd);
+			log.info(con.toString());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// 데이터 읽어오기
+		Statement stmt=null;
+		ResultSet rs=null;
+		List<User> userEntity = new ArrayList<User>();
+		try {
+			stmt=con.createStatement();
+			String sql="select * from user u order by password";
+			rs=stmt.executeQuery(sql);
+			while (rs.next()) {
+				String user_id = rs.getString(1);
+				if (rs.wasNull()) {
+					user_id = "null";
+				}
+				String password = rs.getString(2);
+				if (rs.wasNull()) {
+					password = "null";
+				}
+				String name = rs.getString(3);
+				if (rs.wasNull()) {
+					name = "null";
+				}
+				String phone_number = rs.getString(4);
+				if (rs.wasNull()) {
+					phone_number = "null";
+				}
+				String birthday = rs.getString(5);
+				if (rs.wasNull()) {
+					birthday = "null";
+				}
+				String profile_photo = rs.getString(6);
+				if (rs.wasNull()) {
+					profile_photo = "null";
+				}
+				Date date = java.sql.Date.valueOf(birthday);
+				User user = UserForm.toEntity(user_id, password, name, phone_number, date, profile_photo);
+				userEntity.add(user);
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			if (stmt != null && !stmt.isClosed()) stmt.close();
+			if (rs != null && !rs.isClosed()) rs.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		return userEntity;
+	}
+
+	public User jdbcUserFindById(String userId) throws SQLException, ParseException {
+		Connection con = null;
+		try {
+			log.info(user_id);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/practice";
+			String user = "root", passwd = "12345";
+			con = DriverManager.getConnection(url, user, passwd);
+			log.info(con.toString());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// 데이터 읽어오기
+		Statement stmt=null;
+		ResultSet rs=null;
+		User user = null;
+		try {
+			stmt=con.createStatement();
+			String sql="select * from user u where u.user_id = \"" + userId + "\"";
+			rs=stmt.executeQuery(sql);
+			while (rs.next()) {
+				String user_id = rs.getString(1);
+				if (rs.wasNull()) {
+					user_id = "null";
+				}
+				String password = rs.getString(2);
+				if (rs.wasNull()) {
+					password = "null";
+				}
+				String name = rs.getString(3);
+				if (rs.wasNull()) {
+					name = "null";
+				}
+				String phone_number = rs.getString(4);
+				if (rs.wasNull()) {
+					phone_number = "null";
+				}
+				String birthday = rs.getString(5);
+				if (rs.wasNull()) {
+					birthday = "null";
+				}
+				String profile_photo = rs.getString(6);
+				if (rs.wasNull()) {
+					profile_photo = "null";
+				}
+				Date date = java.sql.Date.valueOf(birthday);
+				user = UserForm.toEntity(user_id, password, name, phone_number, date, profile_photo);
+				log.info(user.toString());
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			if (stmt != null && !stmt.isClosed()) stmt.close();
+			if (rs != null && !rs.isClosed()) rs.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+				
+		try {
+			if (con != null && !con.isClosed()) con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return user;
+	}
+
+	public User jdbcUserSave(User user1) throws SQLException, ParseException {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/practice";
+			String user = "root", passwd = "12345";
+			con = DriverManager.getConnection(url, user, passwd);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		// 데이터 삽입하기 
+		PreparedStatement pstmt = null;
+		try {
+			String psql = "insert into user value (?, ?, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(psql);
+			pstmt.setString(1, user1.getUser_id());
+			pstmt.setString(2, user1.getPassword());
+			pstmt.setString(3, user1.getName());
+			pstmt.setString(4, user1.getPhone_number());
+			pstmt.setDate(5, user1.getBirthday());
+			pstmt.setString(6, user1.getProfile_photo());
+			pstmt.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			if (pstmt != null && !pstmt.isClosed()) pstmt.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+				
+		try {
+			if (con != null && !con.isClosed()) con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return user1;
+	}
+
+	public int jdbcUser_infoSave(String userId, String Email, int gender, String comment) throws SQLException, ParseException {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/practice";
+			String user = "root", passwd = "12345";
+			con = DriverManager.getConnection(url, user, passwd);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		// 데이터 삽입하기 
+		PreparedStatement pstmt = null;
+		try {
+			String psql = "insert into user_info value (?, ?, ?, ?)";
+			pstmt = con.prepareStatement(psql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, Email);
+			pstmt.setInt(3, gender);
+			pstmt.setString(4, comment);
+			pstmt.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			if (pstmt != null && !pstmt.isClosed()) pstmt.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+				
+		try {
+			if (con != null && !con.isClosed()) con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 1;
+	}
+
 	@GetMapping("/login")
 	public String loginIndex() {
 		return "login";
@@ -59,20 +295,20 @@ public class InstagramController {
 	}
 
 	@PostMapping("/create/user")
-	public String usercreate(UserForm form, RedirectAttributes rttr) {
+	public String usercreate(UserForm form, RedirectAttributes rttr) throws SQLException, ParseException {
 		User user = form.toEntity();
-		User user1 = userRepository.findById(user.getUser_id()).orElse(null);
+		User user1 = jdbcUserFindById(user.getUser_id());
 		if(user1 != null) {
 			rttr.addFlashAttribute("msg", "Duplicate ID! Please sign up again.");
 			return "redirect:/signup";
 		}
 
-		User saved = userRepository.save(user);
+		User saved = jdbcUserSave(user);
 		User_infoForm infoForm = User_infoForm.createUser_infoForm(user);
 		log.info(infoForm.toString());
 		User_info savedInfo = User_info.createInfo(infoForm);
 		log.info(savedInfo.toString());
-		int i = user_infoRepository.save(savedInfo.getUser().getUser_id(), savedInfo.getEmail(), savedInfo.getGender(), savedInfo.getIntro_comment());
+		int i = jdbcUser_infoSave(savedInfo.getUser().getUser_id(), savedInfo.getEmail(), savedInfo.getGender(), savedInfo.getIntro_comment());
 		
 		log.info("i = " + i);
 		log.info(saved.toString());
@@ -81,11 +317,11 @@ public class InstagramController {
 	}
 
 	@PostMapping("/profile/update")
-	public String updatePhoto(UserForm form) {
+	public String updatePhoto(UserForm form) throws SQLException, ParseException {
 		log.info(form.toString());
 		User user = form.toEntity();
 		log.info(user.toString());
-		User target = userRepository.findById(user.getUser_id()).orElse(null);
+		User target = jdbcUserFindById(user.getUser_id());
 		log.info(target.toString());
 		
 		if(target!=null) {
@@ -173,14 +409,14 @@ public class InstagramController {
 	}
 
 	@GetMapping("/direct/inbox")
-	public String DMindex(Model model) {
+	public String DMindex(Model model) throws SQLException, ParseException {
 		if(user_id == null) {
 			return "redirect:/login";
 		}
 
 		// List<DMDto> dmDtos = instagramService.DMs(user_id);
 		User user = userRepository.findById(user_id).orElse(null);
-		List<User> userEntity = userRepository.findAll();
+		List<User> userEntity = jdbcUserFindAll();
 		model.addAttribute("DMentity", userEntity);
 		model.addAttribute("userEntity", user);
 
