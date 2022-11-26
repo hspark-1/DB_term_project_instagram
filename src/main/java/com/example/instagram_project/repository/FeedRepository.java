@@ -16,7 +16,7 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 	ArrayList<Feed> findAll();
 	
 	@Query(value =
-            "SELECT * FROM feed s WHERE s.user_id = ?1",
+            "SELECT * FROM feed s WHERE s.user_id = ?1 order by feed_id desc",
             nativeQuery = true)
 	List<Feed> feedsById(String userId);
 
