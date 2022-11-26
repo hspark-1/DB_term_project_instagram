@@ -109,7 +109,7 @@
 							<input type="text" id="getid" placeholder="아이디 입력..." style="position: relative; float: left; width: 100%; height: 20px; padding: 0px; border: 0px;">
 						</div>
 						<div style="position: relative; float: left; top: 3px; width: 45px;">
-							<button id="search-id" style="border: none; background: none;" type="button"><b>검색</b></button>
+							<button id="search-id" style="cursor: pointer; border: none; background: none;" type="button"><b>검색</b></button>
 						</div>
 					</form>
 					<div OnClick="location.href ='/feed/create'" style="cursor: pointer; position: relative; float: left; width: 25px; height: 25px; margin-left: 5px; margin-top: 12.5px; ">
@@ -117,6 +117,11 @@
 					</div>
 					<div OnClick="location.href ='/direct/inbox'" style="cursor: pointer; position: relative; float: right; margin-top: 12.5px; height: 25px;">
 						<img src="https://cdn-icons-png.flaticon.com/512/5948/5948572.png" style="width: 100%; height: 100%;">
+					</div>
+				</header>
+				<header style="position: fixed; top: 570px; left: 1020px;">
+					<div OnClick="location.href ='/profile/{{userEntity.user_id}}'" style="cursor: pointer; width: 50px; height: 50px; border-radius: 25px; border: 1px solid transparent; background-color: rgb(220, 220, 220);">
+						<img src="https://cdn-icons-png.flaticon.com/512/2764/2764007.png" style="width: 100%; height: 100%;">
 					</div>
 				</header>
 			</fieldset>

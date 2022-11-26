@@ -289,6 +289,12 @@ public class InstagramController {
 		return "login";
 	}
 
+	@GetMapping("/logout")
+	public String logOutForm() {
+		user_id = null;
+		return "redirect:/login";
+	}
+
 	@GetMapping("/signup")
 	public String signupIndex() {
 		return "signup";
@@ -357,9 +363,11 @@ public class InstagramController {
 
 		List<FeedDto> feedDtos = instagramService.feeds();
 		List<StoryForm> storyForms = instagramService.allstory();
+		User user = userRepository.findById(user_id).orElse(null);
 
 		model.addAttribute("feedEntity", feedDtos);
 		model.addAttribute("storyEntity", storyForms);
+		model.addAttribute("userEntity", user);
 
 		log.info(feedDtos.toString());
 		log.info(storyForms.toString());
@@ -489,6 +497,7 @@ public class InstagramController {
 
 		log.info(userId);
 		User userEntity = userRepository.findById(userId).orElse(null);
+		User userEntity1 = userRepository.findById(user_id).orElse(null);
 		if(userEntity == null) {
 			return "redirect:/mainpage";
 		}
@@ -504,6 +513,7 @@ public class InstagramController {
 
 		model.addAttribute("feedEntity", feedDtos);
 		model.addAttribute("userEntity", userEntity);
+		model.addAttribute("loginEntity", userEntity1);
 		model.addAttribute("infoEntity", infoEntity);
 		model.addAttribute("followcount", followcount);
 		model.addAttribute("followingcount", followingcount);
