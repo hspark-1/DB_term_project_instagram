@@ -3,12 +3,14 @@ package com.example.instagram_project.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.instagram_project.Service.InstagramService;
+import com.example.instagram_project.annotation.RunningTime;
 import com.example.instagram_project.dto.DMDto;
 import com.example.instagram_project.dto.FeedDto;
 import com.example.instagram_project.dto.Feed_commentDto;
@@ -71,6 +73,17 @@ public class InstagramApiController {
 		log.info(createdDto.toString());
 
 		return (createdDto != null) ? ResponseEntity.status(HttpStatus.OK).body(createdDto) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+	}
+
+	// 댓글 삭제
+	@RunningTime
+	@DeleteMapping("/api/feed/delete/{id}")
+	public ResponseEntity<FeedDto> delete(@PathVariable Long id) {
+		// 서비스에게 위임
+		FeedDto updatedDto = instagramService.delete(id);
+
+		// 결과 응답
+		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
 	}
 
 }

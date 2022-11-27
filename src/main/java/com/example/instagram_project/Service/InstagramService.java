@@ -17,9 +17,11 @@ import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.Story_checkForm;
 import com.example.instagram_project.dto.User_infoForm;
+import com.example.instagram_project.entity.Comment_likes;
 import com.example.instagram_project.entity.DM;
 import com.example.instagram_project.entity.Feed;
 import com.example.instagram_project.entity.Feed_comment;
+import com.example.instagram_project.entity.Feed_likes;
 import com.example.instagram_project.entity.Story;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
@@ -224,5 +226,32 @@ public class InstagramService {
 		// 댓글 엔티티를 DTO로 변환 및 반환
 		return User_infoForm.createUser_infoForm(updated);
 	}
-	
+
+	@Transactional
+	public FeedDto delete(Long id) {
+		// 댓글 조회(및 예외 발생)
+		Feed target = feedRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 삭제 실패! 대상이 없습니다."));
+		List<Feed_comment> commenttargets = feed_commentRepository.findByFeedId(id);
+		List<Feed_likes> feed_likes = feed_likesRepository.findByFeedId(id);
+		for(int i=0; i<feed_likes.size(); i++) {
+			Feed_likes like = feed_likes.get(i);
+			feed_likesRepository.delete(like);
+		}
+		for(int i=0; i<commenttargets.size(); i++) {
+			Feed_comment comment = commenttargets.get(i);
+			List<Comment_likes> likes = comment_likesRepository.findByCommentId(comment.getComment_id());
+			for(int j=0; j<likes.size(); j++) {
+				Comment_likes like = likes.get(j);
+				comment_likesRepository.delete(like);
+			}
+			feed_commentRepository.delete(comment);
+		}
+
+		// 댓글 DB에서 삭제
+		feedRepository.delete(target);
+
+		// 삭제 댓글을 DTO로 반환
+		return FeedDto.createFeedDto(target);
+	}
+
 }
