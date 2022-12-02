@@ -39,7 +39,7 @@
 				</legend>
 				<form>
 					<div style="position: relative; float: right; top: -10px; height: 25px;">
-						<button id="comment-create-btn" style="border: none; background: none; color: blue;" type="submit"><h3 style="margin: 0px;"><b>공유</b></h3></button>
+						<button id="comment-create-btn" style="border: none; background: none; color: blue;" type="button"><h3 style="margin: 0px;"><b>공유</b></h3></button>
 					</div>
 					<div style="width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
 						<textarea placeholder="&nbsp;사진 선택..." style="width: 300px; height: 300px; padding: 0px; border: 0px; font-size: 15pt;" id="getphoto" name="getphoto"></textarea>
@@ -68,9 +68,11 @@
 								}
 							}).then(response => {
 								// 현재 페이지 새로고침
-								window.location.href="/mainpage";
+								const msg = (response.ok) ? "스토리가 등록되었습니다." : "스토리 등록 실패..!";
+								alert(msg);
+								window.location.assign("/mainpage");
 							});
-								window.location.href="/mainpage";
+							window.location.assign("/mainpage");
 						});
 					}
 				</script>

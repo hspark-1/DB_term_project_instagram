@@ -490,9 +490,14 @@ public class InstagramController {
 	}
 
 	@GetMapping("/profile/{userId}")
-	public String showprofile(@PathVariable String userId, Model model) {
+	public String showprofile(@PathVariable String userId, Model model, RedirectAttributes rttr) {
 		if(user_id == null) {
 			return "redirect:/login";
+		}
+		User finduser = userRepository.findById(userId).orElse(null);
+		if(finduser == null) {
+			rttr.addFlashAttribute("msg", "사용자를 찾을 수 없습니다.");
+			return "redirect:/mainpage";
 		}
 
 		log.info(userId);
@@ -502,6 +507,7 @@ public class InstagramController {
 			return "redirect:/mainpage";
 		}
 		User_info infoEntity = user_infoRepository.findById(userId).orElse(null);
+		int follow = followRepository.findByuser_followId(user_id, userId);
 		List<FeedDto> feedDtos = instagramService.feedsById(userId);
 		int followcount = followRepository.findByFollowcount(userId);
 		int followingcount = followRepository.findByUsercount(userId);
@@ -517,6 +523,7 @@ public class InstagramController {
 		model.addAttribute("infoEntity", infoEntity);
 		model.addAttribute("followcount", followcount);
 		model.addAttribute("followingcount", followingcount);
+		model.addAttribute("followbool", follow);
 
 		return "profiledetail";
 	}
@@ -590,10 +597,12 @@ public class InstagramController {
 		}
 
 		log.info("id = " + userId);
+		User user = userRepository.findById(user_id).orElse(null);
 		List<StoryForm> storyForms = instagramService.stories(userId);
 
 		log.info(storyForms.toString());
 
+		model.addAttribute("userEntity", user);
 		model.addAttribute("stories", storyForms);
 
 

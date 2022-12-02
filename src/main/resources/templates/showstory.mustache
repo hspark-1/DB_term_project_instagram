@@ -40,42 +40,89 @@
 				<div style="position: relative; float: left; margin-top: 10px; border-bottom: 30px; text-align: center;">
 					<script>
 						var i=0;
+						var j=0;
 					</script>
 					{{#stories}}
-					<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; text-align: left;">
-						<div style="position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;">
-							<input type="hidden" value="{{user.profile_photo}}" id="getprofile_photo1">
+					<div id="story-{{story_id}}">
+						<div style="text-align: left;">
+							<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; position: relative; float: left; width: 30px; height: 30px; border-radius: 15px; border: 1px solid black;">
+								<input type="hidden" value="{{user.profile_photo}}" id="getprofile_photo1">
+								<script>
+									var a = document.querySelectorAll("#getprofile_photo1");
+									var x = [];
+									x.push(a[i].value);
+									if(a[i].value == 0) {
+										console.log("사진없음");
+										document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 15px; width: 100%; height: 100%;\">");
+									}
+									else {
+										document.write("<img src=\"{{user.profile_photo}}\" style=\"border-radius: 15px; width: 100%; height: 100%;\">");
+									}
+									i++;
+								</script>
+							</div>
+							<div OnClick="location.href ='/profile/{{user.user_id}}'" style="cursor: pointer; position: relative; float: left; width: 60px; height: 30px; line-height : 30px; margin-left: 10px;">
+								{{user.user_id}}
+							</div>
+							<input type="hidden" value="{{userEntity.user_id}}" id="getuserEntity">
+							<input type="hidden" value="{{user.user_id}}" id="getstoryuser">
+							<input type="hidden" value="{{story_id}}" id="getstoryid">
 							<script>
-								var a = document.querySelectorAll("#getprofile_photo1");
-								var x = [];
-								x.push(a[i].value);
-								if(a[i].value == 0) {
-									console.log("사진없음");
-									document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 15px; width: 100%; height: 100%;\">");
+								var b = document.querySelectorAll("#getuserEntity");
+								console.log(b);
+								var c = document.querySelectorAll("#getstoryuser");
+								console.log(c);
+								var d = document.querySelectorAll("#getstoryid");
+								console.log(d);
+								if(b[j].value == c[j].value) {
+									document.write("<div style=\"position: relative; float: right; margin-top: 5px;\"><button id=\"delete-story\" style=\"cursor: pointer; border: none; background: rgb(220, 220, 220); border-radius: 8px; padding: 3px 5px;\" type=\"button\" data-comment-id="+d[j].value+">삭제</button></div>")
 								}
-								else {
-									document.write("<img src=\"{{user.profile_photo}}\" style=\"border-radius: 15px; width: 100%; height: 100%;\">");
-								}
-								i++;
+								j++;
 							</script>
 						</div>
-						<div style="position: relative; float: left; width: 60px; height: 30px; line-height : 30px; margin-left: 10px;">
-							{{user.user_id}}
+						<div style="margin-top: 10px; width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
+							<img src="{{story_photo}}" alt="{{story_photo}}" style="width: 100%; height: 100%;">
+						</div>
+						<div style="width: 300px; height: auto; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px;">
+							<div OnClick="location.href ='/story/check/{{story_id}}'" style="cursor: pointer; position: relative; float: left; width: 302px;">
+								<p style="font-size: 0.75em; margin: 0px;">조회 보기</p>
+							</div>
 						</div>
 					</div>
-					<div style="margin-top: 10px; width: 300px; height: 300px; position: relative; float: left; border: 1px solid black;">
-						<img src="{{story_photo}}" alt="{{story_photo}}" style="width: 100%; height: 100%;">
-					</div>
-					<div style="width: 300px; height: auto; position: relative; float: left; text-align: left; margin-bottom: 20px; margin-top: 10px;">
-						<div OnClick="location.href ='/story/check/{{story_id}}'" style="cursor: pointer; position: relative; float: left; width: 302px;">
-							<p style="font-size: 0.75em; margin: 0px;">조회 보기</p>
-						</div>
-					</div>
-			
 					{{/stories}}
 				</div>
 			</fieldset>
 		</article>
 	</section>
 </body>
+<script>
+	{
+		const deletestory = document.querySelectorAll("#delete-story");
+
+		console.log(deletestory.length);
+
+		deletestory.forEach(btn => {
+			btn.addEventListener("click", function(event) {
+				const deletestoryBtn = event.srcElement;
+				const deleteid = deletestoryBtn.getAttribute("data-comment-id");
+				console.log(`삭제 버튼 클릭: ${deleteid}번 댓글`);
+				// 삭제 API 호출 및 처리
+				const url = `/api/story/delete/${deleteid}`; // 백틱 숫자 물결 키
+				fetch(url, {
+					method: "DELETE"
+				}).then(response => {
+					// 댓글 삭제 실패 처리
+					if (!response.ok) {
+						alert("댓글 삭제 실패..!");
+						return;
+					}
+
+					// 삭제 성공 시, 댓글을 화면에서 지움!
+					const target = document.querySelector(`#story-${deleteid}`);
+					target.remove();
+				})
+			});
+		});
+	}
+</script>
 </html>

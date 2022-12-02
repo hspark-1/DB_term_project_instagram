@@ -22,7 +22,9 @@ import com.example.instagram_project.entity.DM;
 import com.example.instagram_project.entity.Feed;
 import com.example.instagram_project.entity.Feed_comment;
 import com.example.instagram_project.entity.Feed_likes;
+import com.example.instagram_project.entity.Follow;
 import com.example.instagram_project.entity.Story;
+import com.example.instagram_project.entity.Story_check;
 import com.example.instagram_project.entity.User;
 import com.example.instagram_project.entity.User_info;
 import com.example.instagram_project.repository.Comment_likesRepository;
@@ -252,6 +254,46 @@ public class InstagramService {
 
 		// 삭제 댓글을 DTO로 반환
 		return FeedDto.createFeedDto(target);
+	}
+
+	@Transactional
+	public StoryForm deletestory(Long id) {
+		// 댓글 조회(및 예외 발생)
+		Story target = storyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 삭제 실패! 대상이 없습니다."));
+		List<Story_check> commenttargets = story_chekcRepository.findByStoryId(id);
+		for(int i=0; i<commenttargets.size(); i++) {
+			Story_check comment = commenttargets.get(i);
+			story_chekcRepository.delete(comment);
+		}
+
+		// 댓글 DB에서 삭제
+		storyRepository.delete(target);
+
+		// 삭제 댓글을 DTO로 반환
+		return StoryForm.createStoryDto(target);
+	}
+
+	public FollowDto createfollow(String follow, String user) {
+		User user1 = userRepository.findById(user).orElse(null);
+		User user2 = userRepository.findById(follow).orElse(null);
+		Follow target = Follow.createFollow(user, follow, user1, user2);
+
+		Follow created = followRepository.save(target);
+		log.info(created.toString());
+
+		return FollowDto.createFollowDto(created);
+	}
+
+	@Transactional
+	public FollowDto deletefollow(String follow, String user) {
+		// 댓글 조회(및 예외 발생)
+		Follow target = followRepository.findByuser_FollowId(user, follow);
+
+		// 댓글 DB에서 삭제
+		followRepository.delete(target);
+
+		// 삭제 댓글을 DTO로 반환
+		return FollowDto.createFollowDto(target);
 	}
 
 }

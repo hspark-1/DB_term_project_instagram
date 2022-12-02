@@ -14,6 +14,7 @@ import com.example.instagram_project.annotation.RunningTime;
 import com.example.instagram_project.dto.DMDto;
 import com.example.instagram_project.dto.FeedDto;
 import com.example.instagram_project.dto.Feed_commentDto;
+import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.User_infoForm;
 
@@ -81,6 +82,40 @@ public class InstagramApiController {
 	public ResponseEntity<FeedDto> delete(@PathVariable Long id) {
 		// 서비스에게 위임
 		FeedDto updatedDto = instagramService.delete(id);
+
+		// 결과 응답
+		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+	}
+
+	// 스토리 삭제
+	@RunningTime
+	@DeleteMapping("/api/story/delete/{id}")
+	public ResponseEntity<StoryForm> deletestory(@PathVariable Long id) {
+		// 서비스에게 위임
+		StoryForm updatedDto = instagramService.deletestory(id);
+
+		// 결과 응답
+		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+	}
+
+	// 팔로우 생성
+	@PostMapping("/api/follow/create/{followid}/{userid}")
+	public ResponseEntity<FollowDto> createfollow(@PathVariable String followid, @PathVariable String userid) {
+		log.info(followid + " + " + userid);
+		// 서비스에게 위임
+		FollowDto updatedDto = instagramService.createfollow(followid, userid);
+
+		// 결과 응답
+		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+	}
+
+	// 팔로우 삭제
+	@RunningTime
+	@DeleteMapping("/api/follow/delete/{followid}/{userid}")
+	public ResponseEntity<FollowDto> deletefollow(@PathVariable String followid, @PathVariable String userid) {
+		log.info(followid + " + " + userid);
+		// 서비스에게 위임
+		FollowDto updatedDto = instagramService.deletefollow(followid, userid);
 
 		// 결과 응답
 		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);

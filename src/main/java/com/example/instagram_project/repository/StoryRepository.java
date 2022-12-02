@@ -23,7 +23,7 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
 	// List<Story> findByUser_UserId(@Param("userId") String userId);
 
 	@Query(value =
-            "SELECT * FROM Story s WHERE s.user_id = ?1",
+            "SELECT * FROM Story s WHERE s.user_id = ?1 order by story_id desc",
             nativeQuery = true)
 	List<Story> findByUserId(String userId);
 

@@ -24,6 +24,13 @@
 	</style>
 </head>
 <body>
+	{{#msg}}
+	<input type="hidden" value="{{msg}}" id="alertmsg">
+	<script>
+		var a = document.querySelectorAll("#alertmsg");
+		alert(a[0].value);
+	</script>
+	{{/msg}}
 	<section>
 		<article>
 			<fieldset class="container">
@@ -96,7 +103,7 @@
 								var c = document.querySelectorAll("#getfeeduser");
 								var d = document.querySelectorAll("#getfeedid");
 								if(b[j].value == c[j].value) {
-									document.write("<div style=\"position: relative; float: right; margin-top: 5px;\"><button id=\"delete-feed\" style=\"cursor: pointer; border: none; background: none;\" type=\"button\" data-comment-id="+d[j].value+">삭제</button></div>")
+									document.write("<div style=\"position: relative; float: right; margin-top: 5px;\"><button id=\"delete-feed\" style=\"cursor: pointer; border: none; background: rgb(220, 220, 220); border-radius: 8px; padding: 3px 5px;\" type=\"button\" data-comment-id="+d[j].value+">삭제</button></div>")
 								}
 								j++;
 							</script>
