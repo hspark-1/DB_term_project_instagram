@@ -13,7 +13,7 @@
 			border-radius: 10px; 
 			text-align: center; 
 			position: relative; 
-			left: 750px; 
+			left: 40vw; 
 			top: 50%; 
 			overflow: auto;
 			margin-top: 100px;
@@ -90,7 +90,7 @@
 							y.push(b[i].value);
 							z.push(c[i].value);
 							if(x[i] == user_id.value) {
-								document.write("<div class=\"direct-user\"><div style=\"width: 80%;\"><div style=\"text-align: right;\"><div class=\"text-user\"><p style=\"margin: 0;\">"+y[i]+"</p></div></div></div></div>");
+								document.write("<div class=\"direct-user\"><div style=\"width: 80%; margin: 0;\"><div style=\"text-align: right;\"><div class=\"text-user\"><p style=\"margin: 0;\">"+y[i]+"</p></div></div></div></div>");
 							}
 							else {
 								if(d[0].value == 0) {
@@ -107,7 +107,7 @@
 					</script>
 			</fieldset>
 			<form>
-				<div style="position: relative; float: left; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; left: 750px; top: -20px; width: 300px; height: 10px; margin: 2px; border: 2px; padding: 12px; border-width: 2px; border-image: initial;
+				<div style="position: relative; float: left; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; left: 40vw; top: -20px; width: 300px; height: 10px; margin: 2px; border: 2px; padding: 12px; border-width: 2px; border-image: initial;
 				border-style: groove; border-color: rgb(192, 192, 192); background-color: white;">
 					<input type="text" id="getcomment" placeholder="메시지 보내기..." style="border: none; outline: none; border-style: none; border-color: Transparent; position: relative; float: left; top: -10px; left: -6px; height: 26px; width: 78%;">
 					<input type="hidden" value="{{user.user_id}}" id="getsender_id">
