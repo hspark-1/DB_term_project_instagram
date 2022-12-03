@@ -602,6 +602,7 @@ public class InstagramController {
 
 		log.info(storyForms.toString());
 
+		model.addAttribute("countstory", storyForms.size());
 		model.addAttribute("userEntity", user);
 		model.addAttribute("stories", storyForms);
 
