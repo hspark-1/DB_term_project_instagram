@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -334,7 +333,7 @@ public class InstagramController {
 			userRepository.save(user);
 		}
 
-		return "redirect:/mainpage";
+		return "redirect:/profile/" + user_id;
 	}
 
 	@PostMapping("/checkID")
@@ -362,10 +361,12 @@ public class InstagramController {
 		}
 
 		List<FeedDto> feedDtos = instagramService.feeds();
+		List<Feed_likesDto> feed_likesDtos = instagramService.feedlikesDto(user_id);
 		List<StoryForm> storyForms = instagramService.allstory();
 		User user = userRepository.findById(user_id).orElse(null);
 
 		model.addAttribute("feedEntity", feedDtos);
+		model.addAttribute("feedLikesEntity", feed_likesDtos);
 		model.addAttribute("storyEntity", storyForms);
 		model.addAttribute("userEntity", user);
 
@@ -424,7 +425,7 @@ public class InstagramController {
 
 		// List<DMDto> dmDtos = instagramService.DMs(user_id);
 		User user = userRepository.findById(user_id).orElse(null);
-		List<User> userEntity = jdbcUserFindAll();
+		List<FollowDto> userEntity = instagramService.followings(user_id);
 		model.addAttribute("DMentity", userEntity);
 		model.addAttribute("userEntity", user);
 
@@ -467,7 +468,7 @@ public class InstagramController {
 		model.addAttribute("feed_commentDtos", feed_commentDtos);
 
 		User user = userRepository.findById(user_id).orElse(null);
-		model.addAttribute("user", user);
+		model.addAttribute("userEntity", user);
 
 		log.info(feedDto.toString());
 		log.info(feed_commentDtos.toString());

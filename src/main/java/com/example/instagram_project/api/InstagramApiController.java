@@ -14,6 +14,7 @@ import com.example.instagram_project.annotation.RunningTime;
 import com.example.instagram_project.dto.DMDto;
 import com.example.instagram_project.dto.FeedDto;
 import com.example.instagram_project.dto.Feed_commentDto;
+import com.example.instagram_project.dto.Feed_likesDto;
 import com.example.instagram_project.dto.FollowDto;
 import com.example.instagram_project.dto.StoryForm;
 import com.example.instagram_project.dto.User_infoForm;
@@ -116,6 +117,18 @@ public class InstagramApiController {
 		log.info(followid + " + " + userid);
 		// 서비스에게 위임
 		FollowDto updatedDto = instagramService.deletefollow(followid, userid);
+
+		// 결과 응답
+		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+	}
+
+	// 팔로우 삭제
+	@RunningTime
+	@DeleteMapping("/api/feed/likes/{feedId}/{userId}")
+	public ResponseEntity<Feed_likesDto> deletelikes(@PathVariable long feedId, @PathVariable String userId) {
+		log.info(feedId + " + " + userId);
+		// 서비스에게 위임
+		Feed_likesDto updatedDto = instagramService.deletelikes(feedId, userId);
 
 		// 결과 응답
 		return ResponseEntity.status(HttpStatus.OK).body(updatedDto);

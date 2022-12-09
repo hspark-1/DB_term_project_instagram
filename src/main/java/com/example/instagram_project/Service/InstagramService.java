@@ -192,7 +192,7 @@ public class InstagramService {
 	}
 
 	public FeedDto createFeed(FeedDto dto, String id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 게시글이 없습니다."));
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글 생성 실패! 대상 유저가 없습니다."));
 		log.info(user.toString());
 
 		Feed feed = Feed.createFeed(dto, user);
@@ -294,6 +294,25 @@ public class InstagramService {
 
 		// 삭제 댓글을 DTO로 반환
 		return FollowDto.createFollowDto(target);
+	}
+
+	public List<Feed_likesDto> feedlikesDto(String user_id) {
+		return feed_likesRepository.findByUserId(user_id)
+				.stream()
+				.map(feed_likes -> Feed_likesDto.createFeed_likesDto(feed_likes))
+				.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public Feed_likesDto deletelikes(long feedId, String userId) {
+		// 댓글 조회(및 예외 발생)
+		Feed_likes target = feed_likesRepository.findByFeedIdanduserId(feedId, userId);
+
+		// 댓글 DB에서 삭제
+		feed_likesRepository.delete(target);
+
+		// 삭제 댓글을 DTO로 반환
+		return Feed_likesDto.createFeed_likesDto(target);
 	}
 
 }

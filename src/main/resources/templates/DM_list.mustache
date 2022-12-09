@@ -41,9 +41,9 @@
 					</script>
 				<div style="margin-top: 15px; margin-bottom: 30px; text-align: center;">
 					{{#DMentity}}
-					<div OnClick="location.href ='/direct/{{user_id}}'" style="cursor: pointer; margin-left: 10px; margin-bottom: 10px;">
+					<div OnClick="location.href ='/direct/{{user2.user_id}}'" style="cursor: pointer; margin-left: 10px; margin-bottom: 10px;">
 						<div style="position: relative; float: left; width: 50px; height: 50px; border-radius: 25px; border: 1px solid black;">
-							<input type="hidden" value="{{profile_photo}}" id="getprofile_photo1">
+							<input type="hidden" value="{{user2.profile_photo}}" id="getprofile_photo1">
 							<script>
 								var a = document.querySelectorAll("#getprofile_photo1");
 								var x = [];
@@ -53,14 +53,14 @@
 									document.write("<img src=\"https://www.snsboom.co.kr/common/img/default_profile.png\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
 								}
 								else {
-									document.write("<img src=\"{{profile_photo}}\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
+									document.write("<img src=\"{{user2.profile_photo}}\" style=\"border-radius: 25px; width: 100%; height: 100%;\">");
 								}
 								i++;
 							</script>
 						</div>
 						<div style="position: relative; display: inline-block; width: 80%; height: 52px;">
 							<div style="text-align: left; position: relative; left: 5px;">
-								<h3 style="margin: 0px;">{{user_id}}</h3>
+								<h3 style="margin: 0px;">{{user2.user_id}}</h3>
 							</div>
 						</div>
 					</div>

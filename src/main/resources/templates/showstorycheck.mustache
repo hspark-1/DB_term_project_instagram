@@ -39,6 +39,7 @@
 				</legend>
 				<script>
 					var i=0;
+					var j=0;
 				</script>
 				<div style="position: relative; margin-top: 5px; border-bottom: 30px; height: auto; text-align: center;">
 					{{#checkEntity}}
@@ -59,9 +60,19 @@
 								i++;
 							</script>
 						</div>
-						<div style="position: relative; width: 240px; height: auto; float: left; margin-left: 5px; text-align: left;">
+						<div style="position: relative; width: 200px; height: auto; float: left; margin-left: 5px; text-align: left;">
 							<p style="font-size: 1.3em; margin: 0px;"><b>{{user1.user_id}}</b>&nbsp;&nbsp;</p><p style="font-size: 0.75em; margin: 0px;">{{user1.name}}</p>
 						</div>
+						<input type="hidden" value="{{likes}}" id="story-like">
+						<script>
+							var storylike = document.querySelectorAll("#story-like");
+							if(storylike[j].value==0) {
+								document.write(`<div><img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" style="margin-top: 17px; width: 18px; margin-right: 0px;"></div>`);
+							} else {
+								document.write(`<div><img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" style="margin-top: 17px; width: 18px; margin-right: 0px;"></div>`);
+							}
+							j++;
+						</script>
 					</div>
 					{{/checkEntity}}
 					<div style="position: relative; float: left; width: 300px; height: 5px;"></div>

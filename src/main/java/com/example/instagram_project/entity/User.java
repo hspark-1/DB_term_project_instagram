@@ -19,8 +19,6 @@ import lombok.ToString;
 public class User {
 
 	@Id
-	// @OneToOne(mappedBy = "User_info")
-	// @OneToMany(mappedBy = "Story")
 	private String user_id;
 
 	@Column
